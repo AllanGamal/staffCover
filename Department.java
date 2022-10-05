@@ -2,10 +2,13 @@ import java.util.LinkedList;
 public class Department {
 
 
-    private String department;
-    // make a linked list of objects
-    private LinkedList<Team> teamList = new LinkedList<Team>();
+    private String department; 
+    private LinkedList<Team> teamList = new LinkedList<Team>(); // list of teams in the department
 
+    /**
+     * Constructor for the department class
+     * @param department
+     */
     public Department(String department) {
         this.department = department;
     }
@@ -32,16 +35,17 @@ public class Department {
      * Adds the team to the list if it doesn't exist
      * @param teamName - name of the team
      */
-    public void addTeam(Object teamName) {
+    public void addTeam(Object team) {
         
        // check if the team already exists
         for (int i = 0; i < teamList.size(); i++) {
-            if ((teamList.get(i).getTeamName() == (teamName))) {
+            if ((teamList.get(i).getTeamName() == ((Team)team).getTeamName())) {
+                System.out.println("Team already exists");
                 return;
             }
         }
     // add the object to the linked list if it is not already there
-        teamList.add((Team)teamName);
+        this.teamList.add((Team)team);
         
     }
 

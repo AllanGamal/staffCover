@@ -6,28 +6,82 @@ public class Team {
     private LinkedList<Fitter> fitterList = new LinkedList<Fitter>();
     private LinkedList<String> stationList = new LinkedList<String>();
     
-    
+    /**
+     * Constructor for the team class
+     * @param teamName
+     */
     public Team(String teamName) {
         this.teamName = teamName;
         
     }
 
+    /**
+     * Method to change the team name
+     * @param teamName
+     */
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
 
+    /**
+     * Method to get the team name
+     * @return
+     */
     public String getTeamName() {
         return teamName;
     }
 
+    /**
+     * Method to add a fitter to the fitter list
+     * Check if the fitter already exists
+     * Adds the fitter to the list if it doesn't exist 
+     * Checks all this in the Fitter class by ID
+     * @param fitter - name of the fitter
+     */
     public void addFitter(Fitter fitter) {
-        fitterList.add(fitter);
+        // check if the fitter already exists by id
+        for (int i = 0; i < fitterList.size(); i++) {
+            if ((fitterList.get(i).getId() == (fitter.getId()))) {
+                System.out.println("Fitter already exists");
+                return;
+            }
+        }
+        this.fitterList.add(fitter);
     }
 
+    /**
+     * Method to remove a fitter from the fitter list
+     * Compares the fitter id to the id in the list
+     * @param fitter - name of the fitter
+     */
     public void removeFitter(Fitter fitter) {
-        fitterList.remove(fitter);
+        for (int i = 0; i < fitterList.size(); i++) {
+            if ((fitterList.get(i).getId() == (fitter.getId()))) {
+                fitterList.remove(i);
+                return;
+            }
+        }
     }
 
+    /**
+     * Method to move a fitter from one team to another
+     * @param fitter - name of the fitter
+     * @param targetTeam - name of the team to move the fitter to
+     */
+    public void moveFitter(Fitter fitter, Team targetTeam) {
+        for (int i = 0; i < fitterList.size(); i++) {
+            if ((fitterList.get(i).getId() == (fitter.getId()))) {
+                fitterList.remove(i);
+                targetTeam.addFitter(fitter);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Method to get the fitter list
+     * @return fitterList - the fitter list
+     */
     public Fitter[] getFitterList() {
         Fitter[] fitterArray = new Fitter[fitterList.size()];
         for (int i = 0; i < fitterList.size(); i++) {
@@ -40,7 +94,14 @@ public class Team {
      * @return
      */
     public void addStation(String station) {
-        stationList.add(station);
+        // check if the station already exists and add it if it doesn't
+        for (int i = 0; i < stationList.size(); i++) {
+            if (stationList.get(i) == station) {
+                System.out.println("Station already exists");
+                return;
+            }
+        }
+        this.stationList.add(station);
     }
 
     

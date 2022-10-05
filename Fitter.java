@@ -46,7 +46,16 @@ public class Fitter  {
     }
 
     public void addCompetency(String competency) {
+        // check if the competency already exists in the list and add it if it doesn't
+        for (int i = 0; i < this.competency.size(); i++) {
+            if (this.competency.get(i) == competency) {
+                System.out.println("Competency already exists");
+                return;
+            }
+        }
         this.competency.add(competency);
+
+        
     }
 
     public void removeCompetency(String competency) {
