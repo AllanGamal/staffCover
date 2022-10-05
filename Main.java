@@ -1,12 +1,22 @@
 public class Main {
     public static void main(String[] args) {
-        Department department = new Department();
-        department.addTeam("Team 1");
-        department.addTeam("Team 2");
-        department.addTeam("Team 3");
         
-        // print the teamname of the linked list
-        for (Team team : department.getTeamList()) {
-            System.out.println(team.getTeamName());
-        }}
-}
+        
+        
+
+        Department department = new Department("Johan");
+        Team team = new Team("Team1");
+        Fitter fitter = new Fitter(department, "Daniel");
+
+        department.addTeam(team);
+        team.addFitter(fitter);
+
+        int test = fitter.getId();
+
+        System.out.print(test);
+
+        // print every team name of the department
+        for (int i = 0; i < department.getTeamList().length; i++) {
+            System.out.println(department.getTeamList()[i].getTeamName());
+        }
+}}
