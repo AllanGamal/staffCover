@@ -138,7 +138,8 @@ public class Department {
     }
 
     /**
-     * Method to feed the comboWombo method with the team lists
+     * Method to print the team list
+     * @return teamList - the team list
      */
     public ArrayList<String> getCombo() {
         // get the number of stations in the department
