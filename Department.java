@@ -65,7 +65,7 @@ public class Department {
 
     /**
      * Get the value of teamlist (team)
-     * @return
+     * @return the value of teamlist as an array
      */
     public Team[] getTeamList() {
         return teamList.toArray(new Team[teamList.size()]);
