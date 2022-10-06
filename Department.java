@@ -2,7 +2,7 @@ import java.util.LinkedList;
 public class Department {
 
 
-    private String department; 
+    private String department;  
     private LinkedList<Team> teamList = new LinkedList<Team>(); // list of teams in the department
 
     /**
@@ -49,6 +49,10 @@ public class Department {
         
     }
 
+    /**
+     * Method to remove a team from the team list
+     * @param teamName - name of the team
+     */
     public void removeTeam(String teamName) {
         for (int i = 0; i < teamList.size(); i++) {
             if ((teamList.get(i).getTeamName() == (teamName))) {
@@ -66,16 +70,6 @@ public class Department {
     public Team[] getTeamList() {
         return teamList.toArray(new Team[teamList.size()]);
     }
-
-    
-
-   
-    
-
-
-
-    
-
     
 }
  
