@@ -23,9 +23,9 @@ Check if understaffed
         <li>Learning JavaFX, might be time consuming</li>
    </ul>
    
-   
+   ----
    **Scroll down for a diary like documentation**
-   
+   --
    
    **Design of Classes**
    
