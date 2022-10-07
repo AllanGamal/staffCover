@@ -25,3 +25,10 @@ Check if understaffed
    
    
    **Scroll down for a diary like documentation**
+   
+   
+   **Design of Classes**
+   
+   <p>Desing of the classes needed for the project, will probably change things later</p>
+
+  <img src="/images/classDesign.png" >
