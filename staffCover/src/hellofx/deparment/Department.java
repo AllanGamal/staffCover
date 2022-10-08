@@ -1,3 +1,4 @@
+package hellofx.deparment;
 import java.util.*; 
 public class Department {
 
