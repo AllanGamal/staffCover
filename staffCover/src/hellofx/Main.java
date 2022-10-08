@@ -1,4 +1,6 @@
 package hellofx;
+
+import java.io.IOException;
 import java.util.*;
 
 import hellofx.deparment.Department;
@@ -17,15 +19,25 @@ public class Main extends Application{
    
 /************ TESTING PURPOSES *************/
 @Override
-public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("hellofx.fxml"));
+public void start(Stage primaryStage) {
+
+    Parent root;
+    try {
+        root = FXMLLoader.load(getClass().getResource("Test.fxml"));
+        Scene scene = new Scene(root);
     primaryStage.setTitle("Hello World");
-    primaryStage.setScene(new Scene(root, 400, 300));
+    primaryStage.setScene(scene);
     primaryStage.show();
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+       
+    }
+    
+
 }
 
-
 public static void main(String[] args) {
+    launch(args);
     /************ TESTING PURPOSES *************/
     Department department = new Department("Johan");
     Team team1 = new Team("Team1");
@@ -110,7 +122,7 @@ public static void main(String[] args) {
     System.out.println(department.getCombo());
     System.out.println(department.getCombo().size());
     
-    launch(args);
+    
 
     
 }
