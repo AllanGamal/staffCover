@@ -19,19 +19,17 @@ public class Main extends Application{
    
 /************ TESTING PURPOSES *************/
 @Override
-public void start(Stage primaryStage) {
+public void start(Stage primaryStage) throws Exception  {
 
     Parent root;
-    try {
+   
         root = FXMLLoader.load(getClass().getResource("Test.fxml"));
         Scene scene = new Scene(root);
     primaryStage.setTitle("Hello World");
     primaryStage.setScene(scene);
     primaryStage.show();
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-       
-    }
+   
+    
     
 
 }
