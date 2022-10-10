@@ -116,10 +116,14 @@ public class Controller implements Initializable {
             Fitter fitter4 = new Fitter(department, "Sven");
             Fitter fitter5 = new Fitter(department, "Kalle");
 
+            
+
             Team team = new Team(dialog.getEditor().getText());
             ObservableList<Team> teams = tableView.getItems();
             teams.add(team);
             tableView.setItems(teams);
+
+            department.addTeam(team);
 
             team.addFitter(fitter5);
             team.addFitter(fitter4);
@@ -127,15 +131,26 @@ public class Controller implements Initializable {
             team.addFitter(fitter2);
             team.addFitter(fitter1);
 
+            
+
             // print all fitters in the team
             for (int i = 0; i < team.getFitterList().length; i++) {
                 System.out.println(team.getFitterList()[i].getName());
             }
 
-            // print team name
-            System.out.println(team.getTeamName());
+            // print all team name
+            for (int i = 0; i < department.getTeamList().length; i++) {
+                System.out.println(department.getTeamList()[i].getTeamName());
+            }
 
+            int t = 0;
+            // print the number of fitters in the department
+            for (int i = 0; i < department.getTeamList().length; i++) {
+                department.getTeamList()[i].getFitterList();
+                t += department.getTeamList()[i].getFitterList().length;
+            }
            
+            System.out.println(t);
             
             
         } catch(Exception e) {
