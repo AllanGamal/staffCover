@@ -55,9 +55,12 @@
     -fx-border-width: 0 0 1 0;
 }
 
+
+
 .table-view .table-row-cell .table-cell .label {
     -fx-text-fill: #326767;
 }
+
 
 .HBox {
     -fx-background-color: #f4ffff;
@@ -91,9 +94,22 @@
     /*border on left side of button*/
     -fx-background-color: #498686;
     -fx-font: 1.35em "Serif";
+    /*border*/
+
     
     
 }
+
+/* row hover */
+.table-view .table-row-cell:hover {
+    -fx-background-color: #e6f2f2;
+}
+
+/* cell hocer */
+.table-view .table-cell:hover {
+    -fx-background-color: #ddeaea;
+}
+
 
 .tab-pane .tab:selected {
     -fx-background-color: #f4ffff;
@@ -205,3 +221,4 @@
     -fx-background-color: #f4ffff;
     -fx-border-color: #f4ffff;
 }
+
