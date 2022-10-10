@@ -1,5 +1,8 @@
-package hellofx.deparment;
+package hellofx;
 import java.util.LinkedList;
+
+import hellofx.deparment.Department;
+import hellofx.deparment.Fitter;
 
 public class Team {
 
@@ -17,6 +20,7 @@ public class Team {
 
     }
 
+   
     /**
      * Method to change the team name
      * 

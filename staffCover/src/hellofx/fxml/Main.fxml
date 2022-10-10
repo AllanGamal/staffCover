@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720" minWidth="1280" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hellofx.Controller">
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/styling.css" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+            <Tab text="Hem">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+          <Tab text="Teams">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane layoutX="127.0" layoutY="14.0" prefHeight="680.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <top>
+                              <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="693.0" spacing="20.0" styleClass="HBox" stylesheets="@../css/styling.css" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="testy1" graphicTextGap="10.0" text="Teams" textFill="#326767">
+                                       <font>
+                                          <Font name="Serif Regular" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="addPersonal1" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addTeamClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="changePersonal1" graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Ändra">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="removePersonal1" graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Ta bort">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </HBox>
+                           </top>
+                           <center>
+                              <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                <columns>
+                                  <TableColumn fx:id="teamName" prefWidth="168.0" text="Team" />
+                                  <TableColumn fx:id="teamStation" minWidth="0.0" prefWidth="283.0" text="Stationer" />
+                                    <TableColumn fx:id="teamFitters" prefWidth="186.0" text="Personal" />
+                                </columns>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Personal">
+            <content>
+              <AnchorPane>
+                     <children>
+                        <BorderPane prefHeight="689.0" prefWidth="1280.0" stylesheets="@../css/styling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <top>
+                              <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="693.0" spacing="20.0" styleClass="HBox" stylesheets="@../css/styling.css" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Label fx:id="testy" graphicTextGap="10.0" text="Personal" textFill="#326767">
+                                       <font>
+                                          <Font name="Serif Regular" size="25.0" />
+                                       </font>
+                                    </Label>
+                                    <Button fx:id="addPersonal" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addTeamClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="changePersonal" graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Ändra">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="removePersonal" graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Ta bort">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </HBox>
+                           </top>
+                           <center>
+                              <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="name" prefWidth="133.0" text="Namn" />
+                                    <TableColumn fx:id="competency" prefWidth="423.0" text="Kompetens" />
+                                    <TableColumn fx:id="availability" minWidth="0.0" prefWidth="196.0" text="Tillänglighet" />
+                                    <TableColumn fx:id="id" minWidth="0.0" prefWidth="196.0" text="ID" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
