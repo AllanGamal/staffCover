@@ -27,8 +27,18 @@ Check if understaffed
    **Scroll down for a diary like documentation**
    --
    
-   **Design of Classes**
+   <h3>GUI Design</h3>
    
-   <p>Desing of the classes needed for the project, will probably change things later</p>
+  <p>Designed the basic template for the application with a home, teams and employee tabs, giving it room to expande the project with potentially more tabs. Also added added, change and remove-buttons for both the teams and employees tab to their respective table.
+  
+  Next thing to be added is the button functionality to add team and fitters so a basic version of the application can be tested. 
+  </p>
+
+  <img src="/images/teams.jpg" >
+  <img src="/images/personal.jpg" >
+   
+   <h3>Design of Classes</h3>
+   
+   <p>Designing of the classes needed for the project, will probably change things later</p>
 
   <img src="/images/classDesign.png" >
