@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,6 +29,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
@@ -92,7 +94,8 @@ public class Controller implements Initializable {
         teamName.setCellValueFactory(new PropertyValueFactory<Team, String>("teamName"));
         department = new Department("Johan");
         
-    
+        tableView.getSelectionModel().setCellSelectionEnabled(true);
+
     
     }
   
@@ -151,7 +154,39 @@ public class Controller implements Initializable {
             }
            
             System.out.println(t);
-            
+
+            team.removeFitter(fitter5);
+
+
+            // print the number of fitters in the department
+            for (int i = 0; i < department.getTeamList().length; i++) {
+                department.getTeamList()[i].getFitterList();
+                t += department.getTeamList()[i].getFitterList().length;
+            }
+           
+            System.out.println(t);
+
+            /*
+            // add a column to the table
+            TableColumn<Team, Integer> teamFitters = new TableColumn<Team, Integer>("Fitters");
+            tableView.getColumns().add(teamFitters);
+
+            // add a sub column to the table
+            TableColumn<Team, Integer> teamStation = new TableColumn<Team, Integer>("Station");
+            teamFitters.getColumns().add(teamStation);
+ */
+            // add a column to the table
+            TableColumn<Team, Integer> teamy = new TableColumn<Team, Integer>(dialog.getEditor().getText());
+            tableView.getColumns().add(teamy);
+
+            // add a sub column to the table
+            TableColumn<Team, String> teamStation = new TableColumn<Team, String>("Stationer");
+            teamy.getColumns().add(teamStation);
+
+            // add a sub column to the table
+            TableColumn<Team, String> teamFitters = new TableColumn<Team, String>("Personal");
+            teamy.getColumns().add(teamFitters);
+
             
         } catch(Exception e) {
             e.printStackTrace();

@@ -110,6 +110,11 @@
     -fx-background-color: #ddeaea;
 }
 
+.table-column {
+    -fx-alignment: CENTER;
+    -fx-font-size: 1.3em;
+  }
+
 
 .tab-pane .tab:selected {
     -fx-background-color: #f4ffff;
@@ -130,7 +135,6 @@
     -fx-text-fill: #f2f2f2;
     /* font*/
 
-    
 }
 
 
@@ -164,61 +168,17 @@
     -fx-text-fill: #326767;
 }
 
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
 
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
 
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
 
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
-
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
-
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
-
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
-
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
-}
-
-/* tab label text styling when selected and pressed */
-.tab-pane .tab:selected:hover:pressed .tab-label {
-    -fx-text-fill: #326767;
+/* change color of only the one cell that is selected */
+.table-view .table-row-cell .table-cell:selected {
+    -fx-background-color: #68a2a2;
 }
 
 
-.teamTab {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #9baeae;
-    -fx-border-radius: 5px;
-    -fx-border-width: 0 0 1 0;
-}
-
-.teamTab:hover {
-    -fx-background-color: #f4ffff;
-    -fx-border-color: #f4ffff;
+/* change color of only the one cell that is selected */
+.table-view .table-row-cell .table-cell:selected:pressed {
+    -fx-background-color: #498686;
 }
 
