@@ -168,9 +168,6 @@
     -fx-text-fill: #326767;
 }
 
-
-
-
 /* change color of only the one cell that is selected */
 .table-view .table-row-cell .table-cell:selected {
     -fx-background-color: #68a2a2;

@@ -2,7 +2,9 @@ package hellofx;
 
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import hellofx.deparment.Department;
@@ -12,6 +14,7 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,7 +33,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -72,13 +78,13 @@ public class Controller implements Initializable {
     private Button removePersonal1;
 
     @FXML
-    private TableColumn<Team, Integer> teamFitters;
+    private TableColumn<Team, String> teamFitters;
 
     @FXML
     private TableColumn<Team, String> teamName;
 
     @FXML
-    private TableColumn<Team, Integer> teamStation;
+    private TableColumn<Team, String> teamStation;
 
     @FXML
     private Label testy;
@@ -86,18 +92,16 @@ public class Controller implements Initializable {
     @FXML
     private Label testy1;
 
+    ObservableList<Team> teams;
     
 
     
     @Override
     public void initialize(URL location, ResourceBundle resources) { 
         // TODO Auto-generated method stub
-        //teamName.setCellValueFactory(new PropertyValueFactory<Team, String>("teamName"));
         department = new Department("Johan");
-        
+        //teamName.setCellValueFactory(new PropertyValueFactory<Team, String>(s));
         tableView.getSelectionModel().setCellSelectionEnabled(true);
-
-    
     }
   
     @FXML
@@ -135,7 +139,7 @@ public class Controller implements Initializable {
             
             
             Team team = new Team(dialog.getEditor().getText());
-            ObservableList<Team> teams = tableView.getItems();
+            teams = tableView.getItems();
             teams.add(team);
             tableView.setItems(teams);
             department.addTeam(team);
@@ -182,9 +186,70 @@ public class Controller implements Initializable {
 
     @FXML
     void addStationClick(ActionEvent event) {
+        // make an arraylist from the team department.getTeamList()
+        ArrayList<String> teamList = new ArrayList<String>();
+        for (int i = 0; i < department.getTeamList().length; i++) {
+            teamList.add(department.getTeamList()[i].getTeamName());
+        }
 
-    }
+       
+        // choice dialog box to choose from the teamList
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(teamList.get(0), teamList);
+        dialog.setTitle("Välj team");
+        dialog.setHeaderText("Välj team för station"); 
+        dialog.setContentText("Välj team:");
+        dialog.showAndWait();
 
-    
+        // if the user clicks cancel, return
+        if (dialog.getResult() == null) {
+            return;
+        }
+
+        // dialog box to enter the station name
+        TextInputDialog dialog2 = new TextInputDialog("Station name");
+        dialog2.setTitle("Lägg till station");
+        dialog2.setHeaderText("Lägg till station");
+        dialog2.setContentText("Ange stationens namn:");
+        dialog2.showAndWait();
+
+
+        // check if the station already exists
+        for (int i = 0; i < department.getTeamList().length; i++) {
+
+            for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
+
+                if (department.getTeamList()[i].getStationList()[j]
+                        .equals(dialog2.getEditor().getText())) {
+                    // if the station already exists, show an alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Station existerar redan");
+                    alert.setContentText("Station med samma namn existerar redan, vänligen välj ett annat namn");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+            // add the station to the team
+            if (department.getTeamList()[i].getTeamName().equals(dialog.getResult())) {
+                department.getTeamList()[i].addStation(department, dialog2.getEditor().getText());
+            }
+        }
+
+        String s = dialog2.getEditor().getText();
+
+        // add a string as table data
+        TableColumn teamy = new TableColumn(s);
+        TableColumn teamStation = new TableColumn("Stationer");
+        TableColumn teamFitters = new TableColumn("Personal");
+
+        
+        // set the value of second cell to the station name
+        teamStation.setCellValueFactory(new PropertyValueFactory<Team, String>(s));
+        tableView.setItems(teams);
+        tableView.getColumns().add(teamy);
+        tableView.getSelectionModel().setCellSelectionEnabled(true);
+        
+        
+    }    
 
 }
