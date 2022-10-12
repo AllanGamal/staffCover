@@ -1,8 +1,5 @@
-package hellofx;
+package hellofx.deparment;
 import java.util.LinkedList;
-
-import hellofx.deparment.Department;
-import hellofx.deparment.Fitter;
 
 public class Team {
 

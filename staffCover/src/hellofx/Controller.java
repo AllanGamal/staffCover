@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import hellofx.deparment.Department;
 import hellofx.deparment.Fitter;
+import hellofx.deparment.Team;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -85,13 +86,13 @@ public class Controller implements Initializable {
     @FXML
     private Label testy1;
 
-
+    
 
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) { 
         // TODO Auto-generated method stub
-        teamName.setCellValueFactory(new PropertyValueFactory<Team, String>("teamName"));
+        //teamName.setCellValueFactory(new PropertyValueFactory<Team, String>("teamName"));
         department = new Department("Johan");
         
         tableView.getSelectionModel().setCellSelectionEnabled(true);
@@ -108,8 +109,20 @@ public class Controller implements Initializable {
             dialog.setHeaderText("Add team");
             dialog.setContentText("Please enter team name:");
             dialog.showAndWait();
-            
 
+            // check if the team already exists
+            for (int i = 0; i < department.getTeamList().length; i++) {
+                if (department.getTeamList()[i].getTeamName().equals(dialog.getEditor().getText())) {
+                    // if the team already exists, show an alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Team existerar redan");
+                    alert.setContentText("Team med samma namn existerar redan, vänligen välj ett annat namn");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+            
             // add to table
             // to string the text
 
@@ -120,21 +133,27 @@ public class Controller implements Initializable {
             Fitter fitter5 = new Fitter(department, "Kalle");
 
             
-
+            
             Team team = new Team(dialog.getEditor().getText());
             ObservableList<Team> teams = tableView.getItems();
             teams.add(team);
             tableView.setItems(teams);
-
             department.addTeam(team);
+           
+            TableColumn teamy = new TableColumn(dialog.getEditor().getText());
+            TableColumn teamStation = new TableColumn("Stationer");
+            TableColumn teamFitters = new TableColumn("Personal");
+            
+            teamy.getColumns().addAll(teamStation, teamFitters);
+            tableView.getColumns().add(teamy);
+            // resize the columns so that the content is not clipped
+            
 
             team.addFitter(fitter5);
             team.addFitter(fitter4);
             team.addFitter(fitter3);
             team.addFitter(fitter2);
             team.addFitter(fitter1);
-
-            
 
             // print all fitters in the team
             for (int i = 0; i < team.getFitterList().length; i++) {
@@ -146,53 +165,23 @@ public class Controller implements Initializable {
                 System.out.println(department.getTeamList()[i].getTeamName());
             }
 
+            // print the number of fitters in the department
             int t = 0;
-            // print the number of fitters in the department
             for (int i = 0; i < department.getTeamList().length; i++) {
-                department.getTeamList()[i].getFitterList();
                 t += department.getTeamList()[i].getFitterList().length;
             }
-           
-            System.out.println(t);
-
-            team.removeFitter(fitter5);
-
-
-            // print the number of fitters in the department
-            for (int i = 0; i < department.getTeamList().length; i++) {
-                department.getTeamList()[i].getFitterList();
-                t += department.getTeamList()[i].getFitterList().length;
-            }
-           
-            System.out.println(t);
-
-            /*
-            // add a column to the table
-            TableColumn<Team, Integer> teamFitters = new TableColumn<Team, Integer>("Fitters");
-            tableView.getColumns().add(teamFitters);
-
-            // add a sub column to the table
-            TableColumn<Team, Integer> teamStation = new TableColumn<Team, Integer>("Station");
-            teamFitters.getColumns().add(teamStation);
- */
-            // add a column to the table
-            TableColumn<Team, Integer> teamy = new TableColumn<Team, Integer>(dialog.getEditor().getText());
-            tableView.getColumns().add(teamy);
-
-            // add a sub column to the table
-            TableColumn<Team, String> teamStation = new TableColumn<Team, String>("Stationer");
-            teamy.getColumns().add(teamStation);
-
-            // add a sub column to the table
-            TableColumn<Team, String> teamFitters = new TableColumn<Team, String>("Personal");
-            teamy.getColumns().add(teamFitters);
-
+            System.out.println("Totalt antal personal: " + t);
             
         } catch(Exception e) {
             e.printStackTrace();
             
             
         } 
+
+    }
+
+    @FXML
+    void addStationClick(ActionEvent event) {
 
     }
 

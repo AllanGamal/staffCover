@@ -1,7 +1,5 @@
 package hellofx.deparment;
-import java.util.*;
-
-import hellofx.Team; 
+import java.util.*; 
 public class Department {
 
 

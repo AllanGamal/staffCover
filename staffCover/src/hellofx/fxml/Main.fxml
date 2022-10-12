@@ -35,12 +35,12 @@
                                           <Font name="Serif Regular" size="25.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="addPersonal1" graphicTextGap="10.0" mnemonicParsing="false" onAction="#addTeamClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till">
+                                    <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#addTeamClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till team">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="changePersonal1" graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Ändra">
+                                    <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#addStationClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till station">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -58,11 +58,6 @@
                            </top>
                            <center>
                               <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                <columns>
-                                  <TableColumn fx:id="teamName" prefWidth="330.0" text="Team" />
-                                  <TableColumn fx:id="teamStation" minWidth="0.0" prefWidth="517.0" text="Stationer" />
-                                    <TableColumn fx:id="teamFitters" prefWidth="186.0" text="Personal" />
-                                </columns>
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>
