@@ -55,6 +55,7 @@ public class Controller implements Initializable {
     void addTeamClick(ActionEvent event) {
         
         try {
+            
          TextInputDialog dialog = new TextInputDialog("Team name");
             dialog.setTitle("Add team");
             dialog.setHeaderText("Add team");
@@ -72,68 +73,70 @@ public class Controller implements Initializable {
                     alert.showAndWait();
                     return;
                 }
+                // if there is spacing in the team name, show an alert
+                if (dialog.getEditor().getText().contains(" ")) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Felaktigt namn");
+                    alert.setContentText("Team namn får inte innehålla mellanslag");
+                    alert.showAndWait();
+                    return;
+                }
             }
-    
 
-            Fitter fitter1 = new Fitter(department, "Daniel");
-            Fitter fitter2 = new Fitter(department, "Johan");
-            Fitter fitter3 = new Fitter(department, "Kalle");
-            Fitter fitter4 = new Fitter(department, "Sven");
-            Fitter fitter5 = new Fitter(department, "Kalle");
-
-            
-            
             Team team = new Team(dialog.getEditor().getText());
-            
             department.addTeam(team);
-           
-            // resize the columns so that the content is not clipped
 
-            team.addFitter(fitter5);
-            team.addFitter(fitter4);
-            team.addFitter(fitter3);
-            team.addFitter(fitter2);
-            team.addFitter(fitter1);
+            // make a borderpane
+            BorderPane bp = new BorderPane();
 
-            // print all fitters in the team
-            for (int i = 0; i < team.getFitterList().length; i++) {
-                System.out.println(team.getFitterList()[i].getName());
-            }
+            // make a title for the borderpane
+            Label title = new Label(dialog.getEditor().getText());
+            title.setMinWidth(300);
+            bp.setTop(title);
+            bp.setAlignment(title, Pos.CENTER);
 
-            // print all team name
-            for (int i = 0; i < department.getTeamList().length; i++) {
-                System.out.println(department.getTeamList()[i].getTeamName());
-            }
+            // add id to the title
+            title.setId(dialog.getEditor().getText());
+            // add class to title
+            title.getStyleClass().add("title");
 
-            // print the number of fitters in the department
-            int t = 0;
-            for (int i = 0; i < department.getTeamList().length; i++) {
-                t += department.getTeamList()[i].getFitterList().length;
-            }
-            System.out.println("Totalt antal personal: " + t);
             
-        } catch(Exception e) {
+
+            // add a listview left and right of the borderpane
+            ListView<String> lvL = new ListView<String>();
+            ListView<String> lvR = new ListView<String>();
+            lvL.setId(dialog.getEditor().getText() + "S");
+            lvR.setId(dialog.getEditor().getText() + "P");
+            lvL.getStyleClass().add("lVS");
+            lvR.getStyleClass().add("lVP");
+            bp.setLeft(lvL);
+            bp.setRight(lvR);
+            // add the borderpane to the tilepane
+            // make every box of the tilepane at least 300px wide
+            tPane.getChildren().add(bp);
+
+
+        } catch (Exception e) {
             e.printStackTrace();
-            
-            
-        } 
+
+        }
 
     }
 
     @FXML
     void addStationClick(ActionEvent event) {
-        /*
+
         // make an arraylist from the team department.getTeamList()
         ArrayList<String> teamList = new ArrayList<String>();
         for (int i = 0; i < department.getTeamList().length; i++) {
             teamList.add(department.getTeamList()[i].getTeamName());
         }
 
-       
         // choice dialog box to choose from the teamList
         ChoiceDialog<String> dialog = new ChoiceDialog<>(teamList.get(0), teamList);
         dialog.setTitle("Välj team");
-        dialog.setHeaderText("Välj team för station"); 
+        dialog.setHeaderText("Välj team för station");
         dialog.setContentText("Välj team:");
         dialog.showAndWait();
 
@@ -148,7 +151,6 @@ public class Controller implements Initializable {
         dialog2.setHeaderText("Lägg till station");
         dialog2.setContentText("Ange stationens namn:");
         dialog2.showAndWait();
-
 
         // check if the station already exists
         for (int i = 0; i < department.getTeamList().length; i++) {
@@ -172,38 +174,23 @@ public class Controller implements Initializable {
             }
         }
 
-        */
-        // add 3 toggle buttons to the tilepane
-        ToggleButton tb1 = new ToggleButton("Station 1");
-        ToggleButton tb2 = new ToggleButton("Station 2");
-        ToggleButton tb3 = new ToggleButton("Station 3");
+        // search through the tilepane for the team
+        for (int i = 0; i < tPane.getChildren().size(); i++) {
+            // if the tPane includes a borderpane
+            if (tPane.getChildren().get(i) instanceof BorderPane) {
+                // if a title is included the borderpane
+                if (((BorderPane) tPane.getChildren().get(i)).getLeft() instanceof ListView) {
+                    // add the station to the listview
+                    // print the id of the listview
+                    System.out.println(((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getId());
+                    // add the station to the listview
+                    ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getItems()
+                            .add(dialog2.getEditor().getText());
+                }
 
-        // make them 300px wide
-        tb1.setPrefWidth(300);
-        tb2.setPrefWidth(300);
-        tb3.setPrefWidth(300);
-        
-        // make a borderpane
-        BorderPane bp = new BorderPane();
-        //bp.setTop(tb1);
-        bp.setCenter(tb2);
-        bp.setLeft(tb3);
+            }
+        }
 
-        // make a title for the borderpane
-        Label title = new Label("Team x");
-        // center the tb1 button in the borderpane
-        BorderPane.setAlignment(title, Pos.CENTER);
-
-        bp.setTop(title);
-
-        // add the borderpane to the tilepane
-        // make every box of the tilepane at least 300px wide
-        tPane.setMinWidth(900);
-        tPane.getChildren().add(bp);
-
-        
-        // loop through the tilepane and get the 
-        
-    }    
+    }
 
 }

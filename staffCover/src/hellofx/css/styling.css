@@ -206,11 +206,7 @@
 
     -fx-border-color: #0a8a8a;
     -fx-border-radius: 5px;
-    /* text styling for title */
-    -fx-font-size: 1.7em;
-    -fx-font-weight: 250;
-    -fx-text-fill: #326767;
-    -fx-font-family: "Serif";
+    
 
 }
 
@@ -221,3 +217,12 @@
     -fx-border-color: #326767;
     -fx-border-radius: 5px;
 }
+
+.title {
+    /* text styling for title */
+    -fx-font-size: 1.7em;
+    -fx-text-fill: #326767;
+    -fx-font-family: "Serif";
+    -fx-alignment: CENTER;
+}
+
