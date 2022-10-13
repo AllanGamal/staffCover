@@ -1,107 +1,54 @@
 package hellofx;
 
-import java.lang.reflect.Array;
+
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import hellofx.deparment.Department;
 import hellofx.deparment.Fitter;
 import hellofx.deparment.Team;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.TilePane;
+
 
 public class Controller implements Initializable {
 
     Department department;
 
     @FXML
-    private Button addPersonal;
-
-    @FXML
-    private Button addPersonal1;
-
-    @FXML
-    private TableView<Team> tableView;
-
-    @FXML
-    private TableColumn<?, ?> availability;
-
-    @FXML
-    private Button changePersonal;
-
-    @FXML
-    private Button changePersonal1;
-
-    @FXML
-    private TableColumn<?, ?> competency;
+    private HBox tPane;
 
     @FXML
     private TableColumn<?, ?> id;
 
     @FXML
-    private TableColumn<?, ?> name;
-
-    @FXML
-    private Button removePersonal;
-
-    @FXML
-    private Button removePersonal1;
-
-    @FXML
-    private TableColumn<Team, String> teamFitters;
-
-    @FXML
-    private TableColumn<Team, String> teamName;
-
-    @FXML
-    private TableColumn<Team, String> teamStation;
-
-    @FXML
-    private Label testy;
-
-    @FXML
-    private Label testy1;
-
-    ObservableList<Team> teams;
-    
+    private ScrollPane scrollPlane;
 
     
     @Override
     public void initialize(URL location, ResourceBundle resources) { 
         // TODO Auto-generated method stub
         department = new Department("Johan");
-        //teamName.setCellValueFactory(new PropertyValueFactory<Team, String>(s));
-        tableView.getSelectionModel().setCellSelectionEnabled(true);
     }
   
     @FXML
@@ -126,9 +73,7 @@ public class Controller implements Initializable {
                     return;
                 }
             }
-            
-            // add to table
-            // to string the text
+    
 
             Fitter fitter1 = new Fitter(department, "Daniel");
             Fitter fitter2 = new Fitter(department, "Johan");
@@ -139,19 +84,10 @@ public class Controller implements Initializable {
             
             
             Team team = new Team(dialog.getEditor().getText());
-            teams = tableView.getItems();
-            teams.add(team);
-            tableView.setItems(teams);
+            
             department.addTeam(team);
            
-            TableColumn teamy = new TableColumn(dialog.getEditor().getText());
-            TableColumn teamStation = new TableColumn("Stationer");
-            TableColumn teamFitters = new TableColumn("Personal");
-            
-            teamy.getColumns().addAll(teamStation, teamFitters);
-            tableView.getColumns().add(teamy);
             // resize the columns so that the content is not clipped
-            
 
             team.addFitter(fitter5);
             team.addFitter(fitter4);
@@ -186,6 +122,7 @@ public class Controller implements Initializable {
 
     @FXML
     void addStationClick(ActionEvent event) {
+        /*
         // make an arraylist from the team department.getTeamList()
         ArrayList<String> teamList = new ArrayList<String>();
         for (int i = 0; i < department.getTeamList().length; i++) {
@@ -235,20 +172,37 @@ public class Controller implements Initializable {
             }
         }
 
-        String s = dialog2.getEditor().getText();
+        */
+        // add 3 toggle buttons to the tilepane
+        ToggleButton tb1 = new ToggleButton("Station 1");
+        ToggleButton tb2 = new ToggleButton("Station 2");
+        ToggleButton tb3 = new ToggleButton("Station 3");
 
-        // add a string as table data
-        TableColumn teamy = new TableColumn(s);
-        TableColumn teamStation = new TableColumn("Stationer");
-        TableColumn teamFitters = new TableColumn("Personal");
+        // make them 300px wide
+        tb1.setPrefWidth(300);
+        tb2.setPrefWidth(300);
+        tb3.setPrefWidth(300);
+        
+        // make a borderpane
+        BorderPane bp = new BorderPane();
+        //bp.setTop(tb1);
+        bp.setCenter(tb2);
+        bp.setLeft(tb3);
+
+        // make a title for the borderpane
+        Label title = new Label("Team x");
+        // center the tb1 button in the borderpane
+        BorderPane.setAlignment(title, Pos.CENTER);
+
+        bp.setTop(title);
+
+        // add the borderpane to the tilepane
+        // make every box of the tilepane at least 300px wide
+        tPane.setMinWidth(900);
+        tPane.getChildren().add(bp);
 
         
-        // set the value of second cell to the station name
-        teamStation.setCellValueFactory(new PropertyValueFactory<Team, String>(s));
-        tableView.setItems(teams);
-        tableView.getColumns().add(teamy);
-        tableView.getSelectionModel().setCellSelectionEnabled(true);
-        
+        // loop through the tilepane and get the 
         
     }    
 

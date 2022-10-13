@@ -179,3 +179,45 @@
     -fx-background-color: #498686;
 }
 
+/* toggle button red if selected and green if not */
+.toggle-button {
+    -fx-background-color: #447c7c;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    /* make buttons bigger */
+    -fx-min-width: 50px;
+    -fx-min-height: 30px;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #7d5146;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    
+}
+
+/* hbox styling */
+#tPane {
+    -fx-background-color: #ffffff;
+    /* border not top*/
+    -fx-border-width: 0 0 1 0;
+
+    -fx-border-color: #0a8a8a;
+    -fx-border-radius: 5px;
+    /* text styling for title */
+    -fx-font-size: 1.7em;
+    -fx-font-weight: 250;
+    -fx-text-fill: #326767;
+    -fx-font-family: "Serif";
+
+}
+
+
+/* scroll pane styling */
+.scroll-pane {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #326767;
+    -fx-border-radius: 5px;
+}
