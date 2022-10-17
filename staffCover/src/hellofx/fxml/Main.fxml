@@ -45,7 +45,7 @@
                                           <Font size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Ta bort">
+                                    <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#removeClick" styleClass="button2" stylesheets="@../css/styling.css" text="Ta bort">
                                        <font>
                                           <Font size="12.0" />
                                        </font>

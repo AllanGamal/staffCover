@@ -41,7 +41,8 @@ public void start(Stage primaryStage) throws Exception  {
 public static void main(String[] args) {
     
 
-
+    // clear selection when selecting a new item in another listview 
+    
     launch(args);
     
 
