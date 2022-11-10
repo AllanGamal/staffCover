@@ -112,20 +112,73 @@ public class Controller implements Initializable {
             // add the borderpane to the tilepane
             // make every box of the tilepane at least 300px wide
             tPane.getChildren().add(bp);
+            // padding to the right 20px
+            tPane.setSpacing(20);
 
-            //make the list unselectable
-            lvL.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            lvR.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-            // allow for deselection of item when clicking on it again
-            lvL.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (oldSelection != null && newSelection != null && oldSelection.equals(newSelection)) {
-                    lvL.getSelectionModel().clearSelection();
-                }
-            });
+            
 
 
 
+      
+            // add 4 buttons and place them next to each other
+            Label button = new Label("+");
+            button.setId(dialog.getEditor().getText() + "addstation");
+            button.getStyleClass().add("button2");
+            button.getStyleClass().add("button3");
+            bp.setBottom(button);
+
+            Label button2 = new Label("-");
+            button2.setId(dialog.getEditor().getText() + "removestation");
+            button2.getStyleClass().add("button2");
+            button2.getStyleClass().add("button3");
+            bp.setBottom(button2);
+            
+
+            Label button3 = new Label("+");
+            button3.setId(dialog.getEditor().getText() + "addfitter");
+            button3.getStyleClass().add("button2");
+            button3.getStyleClass().add("button3");
+            bp.setBottom(button3);
+            
+
+            Label button4 = new Label("-");
+            button4.setId(dialog.getEditor().getText() + "removefitter");
+            button4.getStyleClass().add("button2");
+            button4.getStyleClass().add("button3");
+            bp.setBottom(button4);
+
+            // add a label next to the two buttons
+            Label label = new Label("Station");
+            label.getStyleClass().add("titlelabel");
+            bp.setBottom(label);
+
+            // add a label next to the two buttons
+            Label label2 = new Label("Personal");
+            label2.getStyleClass().add("titlelabel");
+            bp.setBottom(label2);
+
+
+            // make an hbox to place the buttons in with the class "btnbox"
+            HBox btnbox1 = new HBox();
+            btnbox1.getStyleClass().add("btnboxleft");
+            btnbox1.getChildren().addAll(label, button, button2);
+            bp.setBottom(btnbox1);
+            // set with of the hbox to 300px
+            btnbox1.setPrefWidth(240);
+
+            HBox btnbox2 = new HBox();
+            btnbox2.getStyleClass().add("btnboxleft");
+            btnbox2.getChildren().addAll(label2, button3, button4);
+            bp.setBottom(btnbox2);
+            btnbox1.setPrefWidth(240);
+
+
+
+            HBox btnbox = new HBox();
+            btnbox.getStyleClass().add("btnboxleft");
+            btnbox.getChildren().addAll(btnbox1, btnbox2);
+            bp.setBottom(btnbox);
 
 
         } catch (Exception e) {
@@ -134,6 +187,7 @@ public class Controller implements Initializable {
         }
 
     }
+      
 
     @FXML
     void addStationClick(ActionEvent event) {

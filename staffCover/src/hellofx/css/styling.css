@@ -10,6 +10,9 @@
     /* make buttons bigger */
     -fx-min-width: 50px;
     -fx-min-height: 30px;
+    /*center text*/
+    -fx-alignment: center;
+
 
 }
 
@@ -21,6 +24,41 @@
 
 .button2:pressed {
     -fx-background-color: #2c5e5e;
+}
+
+.button3 {
+    
+    -fx-min-width: 35px;
+    -fx-font-size: 25px;
+}
+
+.btnbox {
+    /* place everything to the left */
+    -fx-alignment: center;
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+}
+
+.btnboxleft {
+    /* place everything to the left */
+    -fx-alignment: left;
+    -fx-spacing: 10px;
+    
+} 
+
+.btnboxright {
+    /* place everything to the right */
+    -fx-alignment: right;
+    -fx-spacing: 10px;
+    
+}
+
+.titlelabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #326767;
+    /* serifs */
+    -fx-font-family: "Serif";
 }
 
 /* table styling */
