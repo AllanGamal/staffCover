@@ -296,16 +296,6 @@ public class Controller implements Initializable {
                     }
                 }
 
-                // if there is spacing in the fitter name, show an alert
-                if (dialog2.getEditor().getText().contains(" ")) {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Felaktigt namn");
-                    alert.setContentText("Fitter namn får inte innehålla mellanslag");
-                    alert.showAndWait();
-                    // stop the method
-                    return;
-                }
 
                 String fitterName = dialog2.getEditor().getText();
                 Fitter fitter = new Fitter(department, fitterName);
@@ -328,6 +318,33 @@ public class Controller implements Initializable {
                 }
                 System.out.println("fitterName");
             });
+
+            // btn action to remove a fitter
+            button4.setOnMouseClicked(e -> {
+                // get the id of the button
+                String id = button4.getId();
+                // remove the "-removefitter" from the id
+                id = id.substring(0, id.length() - 13);
+
+                // remove the selected fitter from the listview on the right
+                // get the listview on the right
+                ListView<String> lv = (ListView<String>) bp.getRight();
+                // get the selected item
+                String selectedItem = lv.getSelectionModel().getSelectedItem();
+                // remove the selected item
+                lv.getItems().remove(selectedItem);
+                // if the fitter is in the team, remove it from the team
+                for (int j = 0; j < department.getTeamList().length; j++) {
+                    if (department.getTeamList()[j].getTeamName().equals(id)) {
+                        for (int i = 0; i < department.getTeamList()[j].getFitterList().length; i++) {
+                            if (department.getTeamList()[j].getFitterList()[i].getName().equals(selectedItem)) {
+                                department.getTeamList()[j].removeFitter(department.getTeamList()[j].getFitterList()[i]);
+                            }
+                        }
+                    }
+                }
+            });
+
                 
 
         } catch (Exception e) {
