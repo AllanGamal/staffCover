@@ -44,6 +44,8 @@ public static void main(String[] args) {
     // clear selection when selecting a new item in another listview 
     
     launch(args);
+    // make a fitter object
+    Fitter fitter = new Fitter("John", "Smith");
     
 
     

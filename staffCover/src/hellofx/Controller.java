@@ -4,12 +4,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import hellofx.deparment.Department;
+import hellofx.deparment.Fitter;
 import hellofx.deparment.Team;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -42,8 +44,6 @@ public class Controller implements Initializable {
         department = new Department("Johan");
         // allow only one selection
 
-       
-        
     }
 
     @FXML
@@ -115,35 +115,28 @@ public class Controller implements Initializable {
             // padding to the right 20px
             tPane.setSpacing(20);
 
-
-            
-
-
-
-      
             // add 4 buttons and place them next to each other
             Label button = new Label("+");
-            button.setId(dialog.getEditor().getText() + "addstation");
+            button.setId(dialog.getEditor().getText() + "-addstation");
             button.getStyleClass().add("button2");
             button.getStyleClass().add("button3");
             bp.setBottom(button);
+            // add an action to the button that prints the id of the button
 
             Label button2 = new Label("-");
-            button2.setId(dialog.getEditor().getText() + "removestation");
+            button2.setId(dialog.getEditor().getText() + "-removestation");
             button2.getStyleClass().add("button2");
             button2.getStyleClass().add("button3");
             bp.setBottom(button2);
-            
 
             Label button3 = new Label("+");
-            button3.setId(dialog.getEditor().getText() + "addfitter");
+            button3.setId(dialog.getEditor().getText() + "-addfitter");
             button3.getStyleClass().add("button2");
             button3.getStyleClass().add("button3");
             bp.setBottom(button3);
-            
 
             Label button4 = new Label("-");
-            button4.setId(dialog.getEditor().getText() + "removefitter");
+            button4.setId(dialog.getEditor().getText() + "-removefitter");
             button4.getStyleClass().add("button2");
             button4.getStyleClass().add("button3");
             bp.setBottom(button4);
@@ -157,7 +150,6 @@ public class Controller implements Initializable {
             Label label2 = new Label("Personal");
             label2.getStyleClass().add("titlelabel");
             bp.setBottom(label2);
-
 
             // make an hbox to place the buttons in with the class "btnbox"
             HBox btnbox1 = new HBox();
@@ -173,21 +165,184 @@ public class Controller implements Initializable {
             bp.setBottom(btnbox2);
             btnbox1.setPrefWidth(240);
 
-
-
             HBox btnbox = new HBox();
             btnbox.getStyleClass().add("btnboxleft");
             btnbox.getChildren().addAll(btnbox1, btnbox2);
             bp.setBottom(btnbox);
 
+            // btn action to add a station
+            button.setOnMouseClicked(e -> {
+                TextInputDialog dialog2 = new TextInputDialog("Station name");
+                dialog2.setTitle("Add station");
+                dialog2.setHeaderText("Add station");
+                dialog2.setContentText("Please enter station name:");
+                dialog2.showAndWait();
+
+                // check if the station already exists
+                for (int i = 0; i < department.getTeamList().length; i++) {
+                    if (department.getTeamList()[i].getTeamName().equals(dialog.getEditor().getText())) {
+                        for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
+                            if (department.getTeamList()[i].getStationList()[j]
+                                    .equals(dialog2.getEditor().getText())) {
+                                // if the station already exists, show an alert
+                                Alert alert = new Alert(AlertType.ERROR);
+                                alert.setTitle("Error");
+                                alert.setHeaderText("Station existerar redan");
+                                alert.setContentText("Station med samma namn existerar redan, vänligen välj ett annat namn");
+                                alert.showAndWait();
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                // if there is spacing in the station name, show an alert
+                if (dialog2.getEditor().getText().contains(" ")) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Felaktigt namn");
+                    alert.setContentText("Station namn får inte innehålla mellanslag");
+                    alert.showAndWait();
+                    // stop the method
+                    return;
+                }
+
+                String id = button.getId();
+                // remove the "-addstation" from the id
+                id = id.substring(0, id.length() - 11);
+
+                String station = dialog2.getEditor().getText();
+                // add the station to the team with the same id as the button
+                // check if the station already exists
+        for (int i = 0; i < department.getTeamList().length; i++) {
+
+            for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
+
+                if (department.getTeamList()[i].getStationList()[j]
+                        .equals(station)) {
+                    // if the station already exists, show an alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Station existerar redan");
+                    alert.setContentText("Station med samma namn existerar redan, vänligen välj ett annat namn");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+            // add the station to the team
+            if (department.getTeamList()[i].getTeamName().equals(id)) {
+                department.getTeamList()[i].addStation(department, station);
+            }
+        }
+                
+                // add the station to the listview
+                lvL.getItems().add(dialog2.getEditor().getText());
+
+            });
+
+            // btn action to remove station
+            button2.setOnMouseClicked(e -> {
+                // get the id of the button
+                String id = button2.getId();
+                // remove the "-removeStation" from the id
+                id = id.substring(0, id.length() - 14);
+                
+                
+                // remove the selected station from the listview on the left
+                // get the listview on the left
+                ListView<String> lv = (ListView<String>) bp.getLeft();
+                // get the selected item
+                String selectedItem = lv.getSelectionModel().getSelectedItem();
+                // remove the selected item
+                lv.getItems().remove(selectedItem);
+                // if the station is in the team, remove it from the team
+                for (int j = 0; j < department.getTeamList().length; j++) {
+                    if (department.getTeamList()[j].getTeamName().equals(id)) {
+                        for (int i = 0; i < department.getTeamList()[j].getStationList().length; i++) {
+                            if (department.getTeamList()[j].getStationList()[i].equals(selectedItem)) {
+                                department.getTeamList()[j].removeStation(department.getTeamList()[j].getStationList()[i]);
+                            }
+                        }
+                    }
+                }
+            });
+
+            // btn action to add a fitter
+            button3.setOnMouseClicked(e-> {
+                TextInputDialog dialog2 = new TextInputDialog("Montörens namn");
+                dialog2.setTitle("Lägg till montör");
+                dialog2.setHeaderText("Add montör");
+                dialog2.setContentText("Vänligen ange montörens namn:");
+                dialog2.showAndWait();
+
+                String id = button3.getId();
+                // remove the "-addfitter" from the id
+                id = id.substring(0, id.length() - 10);
+
+                // check if the fitter already exists in any team
+                for (int i = 0; i < department.getTeamList().length; i++) {
+                    for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                        if (department.getTeamList()[i].getFitterList()[j].getName()
+                                .equals(dialog2.getEditor().getText())) {
+                            // if the fitter already exists, show an alert
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Personen existerar redan");
+                            alert.setContentText(
+                                    "Personen med samma namn existerar redan, vänligen välj ett annat namn");
+                            alert.showAndWait();
+                            return;
+                        }
+                    }
+                }
+
+                // if there is spacing in the fitter name, show an alert
+                if (dialog2.getEditor().getText().contains(" ")) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Felaktigt namn");
+                    alert.setContentText("Fitter namn får inte innehålla mellanslag");
+                    alert.showAndWait();
+                    // stop the method
+                    return;
+                }
+
+                String fitterName = dialog2.getEditor().getText();
+                Fitter fitter = new Fitter(department, fitterName);
+               
+                // add the fitter to the team with the same id as the button
+                for (int i = 0; i < department.getTeamList().length; i++) {
+                    if (department.getTeamList()[i].getTeamName().equals(id)) {
+                        department.getTeamList()[i].addFitter(fitter);
+                    }
+                }
+
+                // add the fitter to the listview
+                lvR.getItems().add(dialog2.getEditor().getText());
+
+                // print all the fitters in all the teams
+                for (int i = 0; i < department.getTeamList().length; i++) {
+                    for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                        System.out.println(department.getTeamList()[i].getFitterList()[j].getName());
+                    }
+                }
+                System.out.println("fitterName");
+            });
+                
 
         } catch (Exception e) {
             e.printStackTrace();
 
         }
 
+
     }
-      
+
+    // action for dynamic button
+
+    void addStation(String id) {
+        System.out.println(id);
+    }
 
     @FXML
     void addStationClick(ActionEvent event) {
@@ -259,13 +414,12 @@ public class Controller implements Initializable {
                                 .add(dialog2.getEditor().getText());
                     }
                     // add the station to the listview
-                    
+
                 }
 
             }
         }
 
-      
     }
 
     @FXML
@@ -279,7 +433,7 @@ public class Controller implements Initializable {
                         ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getItems().remove(
                                 ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getSelectionModel()
                                         .getSelectedIndex());
-                                        // remove from the team
+                        // remove from the team
                         for (int j = 0; j < department.getTeamList().length; j++) {
                             // string s = the selected item
                             String s = (String) ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft())
@@ -287,8 +441,9 @@ public class Controller implements Initializable {
                             // if the team name is the same as the id of the listview
                             if (department.getTeamList()[j].getTeamName()
                                     .equals(((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getId()
-                                            .substring(0, ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft())
-                                                    .getId().length() - 1))) {
+                                            .substring(0,
+                                                    ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft())
+                                                            .getId().length() - 1))) {
                                 // remove the station from the team
                                 department.getTeamList()[j].removeStation(s);
                             }
@@ -299,13 +454,17 @@ public class Controller implements Initializable {
         }
     }
 
-        /*
-        // print all the team and the station under it
-        for (int i = 0; i < department.getTeamList().length; i++) {
-            System.out.println(department.getTeamList()[i].getTeamName());
-            for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
-                System.out.println(department.getTeamList()[i].getStationList()[j]);
-            }
-        }
-         */
-    }
+    /*
+     * // print all the team and the station under it
+     * for (int i = 0; i < department.getTeamList().length; i++) {
+     * System.out.println(department.getTeamList()[i].getTeamName());
+     * for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++)
+     * {
+     * System.out.println(department.getTeamList()[i].getStationList()[j]);
+     * }
+     * }
+     */
+
+    
+
+}
