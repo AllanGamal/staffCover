@@ -85,7 +85,7 @@
                                           <Font name="Serif Regular" size="25.0" />
                                        </font>
                                     </Label>
-                                    <Button graphicTextGap="10.0" mnemonicParsing="false" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till">
+                                    <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#testyytestyy" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -107,12 +107,12 @@
                               </HBox>
                            </top>
                            <center>
-                              <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="fitterTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <columns>
-                                    <TableColumn prefWidth="254.0" text="Namn" />
-                                    <TableColumn prefWidth="369.0" text="Kompetens" />
-                                    <TableColumn minWidth="0.0" prefWidth="234.0" text="Tillänglighet" />
-                                    <TableColumn fx:id="id" minWidth="0.0" prefWidth="241.0" text="ID" />
+                                    <TableColumn fx:id="nameCol" prefWidth="254.0" text="Namn" />
+                                    <TableColumn fx:id="competencyCol" prefWidth="369.0" text="Kompetens" />
+                                    <TableColumn fx:id="availabilityCol" minWidth="0.0" prefWidth="234.0" text="Tillänglighet" />
+                                    <TableColumn fx:id="idCol" minWidth="0.0" prefWidth="241.0" text="ID" />
                                  </columns>
                               </TableView>
                            </center>

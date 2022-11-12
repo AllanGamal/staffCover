@@ -6,22 +6,24 @@ import java.util.ResourceBundle;
 import hellofx.deparment.Department;
 import hellofx.deparment.Fitter;
 import hellofx.deparment.Team;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -33,17 +35,80 @@ public class Controller implements Initializable {
     private HBox tPane;
 
     @FXML
-    private TableColumn<?, ?> id;
+    private TableView<Fitter> fitterTable;
+
+    @FXML
+    private TableColumn<Fitter, Boolean> availabilityCol;
+
+    @FXML
+    private TableColumn<Fitter, ComboBox> competencyCol;
+
+    @FXML
+    private TableColumn<Fitter, String> idCol;
+
+    @FXML
+    private TableColumn<Fitter, String> nameCol;
 
     @FXML
     private ScrollPane scrollPlane;
 
+    ObservableList<Fitter> list = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
         // TODO Auto-generated method stub
         department = new Department("Johan");
-        // allow only one selection
 
+        fitterTable.setItems(list);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        competencyCol.setCellValueFactory(new PropertyValueFactory<>("competency"));
+        availabilityCol.setCellValueFactory(new PropertyValueFactory<>("availability"));
+        
+        // make a button in the competency column that says "hi"
+        fitterTable.setRowFactory( tv -> {
+            TableRow<Fitter> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    Fitter rowData = row.getItem();
+                    // make a pop up box with a listview o all the competency of the fitter
+
+                    ListView<String> listView = new ListView<String>();
+                    ObservableList<String> list = FXCollections.observableArrayList(rowData.getCompetency());
+                    listView.setItems(list);
+                    BorderPane pane = new BorderPane();
+                    pane.setCenter(listView);
+                    // make a new window with the listview
+                    
+
+
+
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    // add a button to the alert box
+                    alert.setTitle("Competency");
+                    alert.setHeaderText("Competency of " + rowData.getName());
+                    alert.getDialogPane().setContent(pane);
+                    alert.showAndWait();
+
+                    // if competency is double clicked in the alert box, make a new window with a listview of all the teams that the fitter is in
+                    
+
+                    // add a button to the pop up box that says "add competency"
+                    
+                    
+                
+
+
+                    
+                }
+            });
+            return row ;
+        });
+
+        
+        
+        
     }
 
     @FXML
@@ -108,7 +173,9 @@ public class Controller implements Initializable {
             lvR.getStyleClass().add("lVP");
             bp.setLeft(lvL);
             bp.setRight(lvR);
+            // make bp heght have a dynamic height
             bp.setPrefHeight(580);
+
             // add the borderpane to the tilepane
             // make every box of the tilepane at least 300px wide
             tPane.getChildren().add(bp);
@@ -188,7 +255,8 @@ public class Controller implements Initializable {
                                 Alert alert = new Alert(AlertType.ERROR);
                                 alert.setTitle("Error");
                                 alert.setHeaderText("Station existerar redan");
-                                alert.setContentText("Station med samma namn existerar redan, vänligen välj ett annat namn");
+                                alert.setContentText(
+                                        "Station med samma namn existerar redan, vänligen välj ett annat namn");
                                 alert.showAndWait();
                                 return;
                             }
@@ -214,27 +282,28 @@ public class Controller implements Initializable {
                 String station = dialog2.getEditor().getText();
                 // add the station to the team with the same id as the button
                 // check if the station already exists
-        for (int i = 0; i < department.getTeamList().length; i++) {
+                for (int i = 0; i < department.getTeamList().length; i++) {
 
-            for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
+                    for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
 
-                if (department.getTeamList()[i].getStationList()[j]
-                        .equals(station)) {
-                    // if the station already exists, show an alert
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Station existerar redan");
-                    alert.setContentText("Station med samma namn existerar redan, vänligen välj ett annat namn");
-                    alert.showAndWait();
-                    return;
+                        if (department.getTeamList()[i].getStationList()[j]
+                                .equals(station)) {
+                            // if the station already exists, show an alert
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText("Station existerar redan");
+                            alert.setContentText(
+                                    "Station med samma namn existerar redan, vänligen välj ett annat namn");
+                            alert.showAndWait();
+                            return;
+                        }
+                    }
+                    // add the station to the team
+                    if (department.getTeamList()[i].getTeamName().equals(id)) {
+                        department.getTeamList()[i].addStation(department, station);
+                    }
                 }
-            }
-            // add the station to the team
-            if (department.getTeamList()[i].getTeamName().equals(id)) {
-                department.getTeamList()[i].addStation(department, station);
-            }
-        }
-                
+
                 // add the station to the listview
                 lvL.getItems().add(dialog2.getEditor().getText());
 
@@ -246,8 +315,7 @@ public class Controller implements Initializable {
                 String id = button2.getId();
                 // remove the "-removeStation" from the id
                 id = id.substring(0, id.length() - 14);
-                
-                
+
                 // remove the selected station from the listview on the left
                 // get the listview on the left
                 ListView<String> lv = (ListView<String>) bp.getLeft();
@@ -260,7 +328,8 @@ public class Controller implements Initializable {
                     if (department.getTeamList()[j].getTeamName().equals(id)) {
                         for (int i = 0; i < department.getTeamList()[j].getStationList().length; i++) {
                             if (department.getTeamList()[j].getStationList()[i].equals(selectedItem)) {
-                                department.getTeamList()[j].removeStation(department.getTeamList()[j].getStationList()[i]);
+                                department.getTeamList()[j]
+                                        .removeStation(department.getTeamList()[j].getStationList()[i]);
                             }
                         }
                     }
@@ -268,7 +337,7 @@ public class Controller implements Initializable {
             });
 
             // btn action to add a fitter
-            button3.setOnMouseClicked(e-> {
+            button3.setOnMouseClicked(e -> {
                 TextInputDialog dialog2 = new TextInputDialog("Montörens namn");
                 dialog2.setTitle("Lägg till montör");
                 dialog2.setHeaderText("Add montör");
@@ -296,10 +365,9 @@ public class Controller implements Initializable {
                     }
                 }
 
-
                 String fitterName = dialog2.getEditor().getText();
                 Fitter fitter = new Fitter(department, fitterName);
-               
+
                 // add the fitter to the team with the same id as the button
                 for (int i = 0; i < department.getTeamList().length; i++) {
                     if (department.getTeamList()[i].getTeamName().equals(id)) {
@@ -310,13 +378,12 @@ public class Controller implements Initializable {
                 // add the fitter to the listview
                 lvR.getItems().add(dialog2.getEditor().getText());
 
-                // print all the fitters in all the teams
-                for (int i = 0; i < department.getTeamList().length; i++) {
-                    for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
-                        System.out.println(department.getTeamList()[i].getFitterList()[j].getName());
-                    }
-                }
-                System.out.println("fitterName");
+                
+                // add competency to the fitter
+                fitter.addCompetency("fitterName");
+                
+                addNameToTable();
+
             });
 
             // btn action to remove a fitter
@@ -338,27 +405,28 @@ public class Controller implements Initializable {
                     if (department.getTeamList()[j].getTeamName().equals(id)) {
                         for (int i = 0; i < department.getTeamList()[j].getFitterList().length; i++) {
                             if (department.getTeamList()[j].getFitterList()[i].getName().equals(selectedItem)) {
-                                department.getTeamList()[j].removeFitter(department.getTeamList()[j].getFitterList()[i]);
+                                department.getTeamList()[j]
+                                        .removeFitter(department.getTeamList()[j].getFitterList()[i]);
                             }
                         }
                     }
                 }
+                removeNameFromTable();
             });
-
-                
 
         } catch (Exception e) {
             e.printStackTrace();
 
         }
 
-
     }
 
-    // action for dynamic button
+    @FXML
+    void testyytestyy(ActionEvent event) {
 
-    void addStation(String id) {
-        System.out.println(id);
+        // update the table
+        fitterTable.refresh();
+
     }
 
     @FXML
@@ -482,6 +550,38 @@ public class Controller implements Initializable {
      * }
      */
 
-    
+    void addNameToTable() {
+        // add the fitter to the table if the fitter is not already in the table
+        for (int i = 0; i < department.getTeamList().length; i++) {
+            for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                // if the fitter is not in the tableview
+                if (!fitterTable.getItems().contains(department.getTeamList()[i].getFitterList()[j])) {
+                    // add the fitter to the tableview
+                    fitterTable.getItems().add(department.getTeamList()[i].getFitterList()[j]);
+                }
+            }
+        }
+
+    }
+
+    void removeNameFromTable() {
+        // remove the fitter from the table if the row with the name fitter is not in
+        // any team
+        for (int i = 0; i < fitterTable.getItems().size(); i++) {
+            boolean found = false;
+            for (int j = 0; j < department.getTeamList().length; j++) {
+                for (int k = 0; k < department.getTeamList()[j].getFitterList().length; k++) {
+                    if (fitterTable.getItems().get(i).getName()
+                            .equals(department.getTeamList()[j].getFitterList()[k].getName())) {
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                fitterTable.getItems().remove(i);
+            }
+        }
+
+    }
 
 }
