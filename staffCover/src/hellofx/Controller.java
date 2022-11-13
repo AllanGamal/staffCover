@@ -67,15 +67,12 @@ public class Controller implements Initializable {
         
         // TODO Auto-generated method stub
         department = new Department("Johan");
-
         fitterTable.setItems(list);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         competencyCol.setCellValueFactory(new PropertyValueFactory<>("competency"));
         availabilityCol.setCellValueFactory(new PropertyValueFactory<>("availability"));
-  
-        
-        
+
         
     }
     
@@ -516,16 +513,6 @@ public class Controller implements Initializable {
         }
     }
 
-    /*
-     * // print all the team and the station under it
-     * for (int i = 0; i < department.getTeamList().length; i++) {
-     * System.out.println(department.getTeamList()[i].getTeamName());
-     * for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++)
-     * {
-     * System.out.println(department.getTeamList()[i].getStationList()[j]);
-     * }
-     * }
-     */
 
     void addNameToTable() {
         // add the fitter to the table if the fitter is not already in the table
