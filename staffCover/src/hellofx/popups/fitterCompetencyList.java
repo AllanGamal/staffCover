@@ -1,16 +1,20 @@
 package hellofx.popups;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 
-// implements Controller methods from the 
 public class FitterCompetencyList {
 
+    @FXML
+    private ListView<String> abc;
+
+    @FXML
+    private Button addToComList;
+
+    @FXML
+    private Button removeFrComList;
+
     
-    
-    public static void main(String[] args) {
-        System.out.println("Hello World");
-    }
+
 }

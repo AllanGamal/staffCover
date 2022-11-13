@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import hellofx.deparment.Department;
 import hellofx.deparment.Fitter;
 import hellofx.deparment.Team;
+import hellofx.popups.FitterCompetencyList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,24 +18,23 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-public class Controller implements Initializable {
+// implements Initializable and add initialize method
+public class Controller implements Initializable   {
 
     Department department;
 
@@ -73,9 +73,23 @@ public class Controller implements Initializable {
         competencyCol.setCellValueFactory(new PropertyValueFactory<>("competency"));
         availabilityCol.setCellValueFactory(new PropertyValueFactory<>("availability"));
 
-        
+        // if row in table is double clicked
+        fitterTable.setOnMouseClicked(e -> {
+            // get the name of the selected row
+            String nameID = fitterTable.getSelectionModel().getSelectedItem().getName();
+            if (e.getClickCount() == 2) {
+                try {
+                    Scene newPopup = newPopup("fxml/fitterCompetencyList.fxml", nameID);
+                    addRestOfStations(newPopup, nameID);
+                    addCompetencyStations(newPopup, nameID);
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    System.out.println("Funkar ej");
+                }
+            }
+        });  
     }
-    
+
 
     @FXML
     void addTeamClick(ActionEvent event) {
@@ -390,14 +404,20 @@ public class Controller implements Initializable {
     @FXML
     void testyytestyy(ActionEvent event) throws IOException {
         // open new window from the fittercompetencylist.fxml
-         Parent root1 = FXMLLoader.load(getClass().getResource("fxml/fitterCompetencyList.fxml"));
+        Parent root1 = FXMLLoader.load(getClass().getResource("fxml/fitterCompetencyList.fxml"));
         Scene scene = new Scene(root1);
         Stage primaryStage = new Stage();
         primaryStage.setScene(scene);
         primaryStage.show();
-        
-        
-        
+
+        ListView<String> lv;
+
+        // if there is a listview with the class "listview-allcomlist", add a id "abc" to it
+        if (scene.lookup(".listview-allcomlist") != null) {
+            lv = (ListView<String>) scene.lookup(".listview-allcomlist");
+            lv.setId("abc");
+        }
+     
         // update the table
         fitterTable.refresh();
 
@@ -547,8 +567,66 @@ public class Controller implements Initializable {
         }
 
     }
+    public Scene newPopup(String fxml, String name) throws IOException {
+        Parent root1 = FXMLLoader.load(getClass().getResource(fxml));
+        Scene scene = new Scene(root1);
+        Stage primaryStage = new Stage();
+        // set title
+        primaryStage.setTitle(name);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-    
+        return scene;
+    }
+
+    public void addRestOfStations(Scene scene, String ID) throws IOException {
+        // get the name of the selected
+
+        // if there is a listview with the ID "ID"
+        ListView<String> lv;
+        lv = (ListView<String>) scene.lookup(".listview-allcomlist");
+
+        // iv ID of lv is "abc", add the fitters to the listview
+
+        // unless the station is not in the fitter (ID) competency list, add the stations to the listview
+        for (int i = 0; i < department.getTeamList().length; i++) {
+            for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
+                for (int k = 0; k < department.getTeamList()[i].getFitterList().length; k++) {
+                    if (department.getTeamList()[i].getFitterList()[k].getName().equals(ID)) {
+                        for (int l = 0; l < department.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) {
+                            if (!department.getTeamList()[i].getFitterList()[k].getCompetency()[l]
+                                    .equals(department.getTeamList()[i].getStationList()[j])) {
+                                lv.getItems().add(department.getTeamList()[i].getStationList()[j]);
+                            }
+                        }
+                        break;
+                    }
+                    
+                }
+            }
+        }
+
+        // update the table
+        fitterTable.refresh();
+    }
+
+    private void addCompetencyStations(Scene scene, String nameID) {
+        ListView<String> lv;
+        lv = (ListView<String>) scene.lookup(".listview-comlist");
+
+        for (int i = 0; i < department.getTeamList().length; i++) {
+            for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                if (department.getTeamList()[i].getFitterList()[j].getName().equals(nameID)) {
+                    for (int k = 0; k < department.getTeamList()[i].getFitterList()[j].getCompetency().length; k++) {
+                        lv.getItems().add(department.getTeamList()[i].getFitterList()[j].getCompetency()[k]);
+                    }
+                }
+
+            }
+        }
+    }
+
 
 }
+
 

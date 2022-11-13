@@ -31,9 +31,7 @@ public void start(Stage primaryStage) throws Exception  {
     primaryStage.setTitle("Hello World");
     primaryStage.setScene(scene);
     primaryStage.show();
-   
-    
-    
+
 
 }
 

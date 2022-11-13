@@ -8,20 +8,19 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="520.0" stylesheets="@../css/StylingFitterCompetencyList.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hellofx.popups.FitterCompetencyList">
    <left>
       <VBox prefHeight="600.0" prefWidth="255.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="50.0" prefWidth="250.0" styleClass="vbox-label" text="Alla stationer" />
-            <ListView prefHeight="500.0" prefWidth="250.0">
+            <ListView fx:id="abc" prefHeight="500.0" prefWidth="250.0" styleClass="listview-allcomlist">
                <VBox.margin>
                   <Insets left="5.0" />
                </VBox.margin>
             </ListView>
             <AnchorPane>
                <children>
-                  <Button layoutX="102.0" layoutY="7.0" mnemonicParsing="false" text="Lägg till" />
+                  <Button fx:id="addToComList" layoutX="102.0" layoutY="7.0" mnemonicParsing="false" text="Lägg till" />
                </children>
             </AnchorPane>
          </children>
@@ -31,14 +30,14 @@
       <VBox prefHeight="600.0" prefWidth="255.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="50.0" prefWidth="250.0" styleClass="vbox-label" text="Kompetens" />
-            <ListView prefHeight="500.0" prefWidth="250.0">
+            <ListView prefHeight="500.0" prefWidth="250.0" styleClass="listview-comlist">
                <VBox.margin>
                   <Insets right="5.0" />
                </VBox.margin>
             </ListView>
             <AnchorPane>
                <children>
-                  <Button layoutX="102.0" layoutY="7.0" mnemonicParsing="false" text="Ta bort" />
+                  <Button fx:id="removeFrComList" layoutX="102.0" layoutY="7.0" mnemonicParsing="false" text="Ta bort" />
                </children>
             </AnchorPane>
          </children>
