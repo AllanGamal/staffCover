@@ -1,5 +1,6 @@
 package hellofx;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -10,8 +11,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.ComboBox;
@@ -26,6 +30,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Controller implements Initializable {
 
@@ -53,6 +60,7 @@ public class Controller implements Initializable {
     private ScrollPane scrollPlane;
 
     ObservableList<Fitter> list = FXCollections.observableArrayList();
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -65,51 +73,12 @@ public class Controller implements Initializable {
         idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
         competencyCol.setCellValueFactory(new PropertyValueFactory<>("competency"));
         availabilityCol.setCellValueFactory(new PropertyValueFactory<>("availability"));
-        
-        // make a button in the competency column that says "hi"
-        fitterTable.setRowFactory( tv -> {
-            TableRow<Fitter> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    Fitter rowData = row.getItem();
-                    // make a pop up box with a listview o all the competency of the fitter
-
-                    ListView<String> listView = new ListView<String>();
-                    ObservableList<String> list = FXCollections.observableArrayList(rowData.getCompetency());
-                    listView.setItems(list);
-                    BorderPane pane = new BorderPane();
-                    pane.setCenter(listView);
-                    // make a new window with the listview
-                    
-
-
-
-                    Alert alert = new Alert(AlertType.INFORMATION);
-                    // add a button to the alert box
-                    alert.setTitle("Competency");
-                    alert.setHeaderText("Competency of " + rowData.getName());
-                    alert.getDialogPane().setContent(pane);
-                    alert.showAndWait();
-
-                    // if competency is double clicked in the alert box, make a new window with a listview of all the teams that the fitter is in
-                    
-
-                    // add a button to the pop up box that says "add competency"
-                    
-                    
-                
-
-
-                    
-                }
-            });
-            return row ;
-        });
-
+  
         
         
         
     }
+    
 
     @FXML
     void addTeamClick(ActionEvent event) {
@@ -422,8 +391,16 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    void testyytestyy(ActionEvent event) {
-
+    void testyytestyy(ActionEvent event) throws IOException {
+        // open new window from the fittercompetencylist.fxml
+         Parent root1 = FXMLLoader.load(getClass().getResource("fxml/fitterCompetencyList.fxml"));
+        Scene scene = new Scene(root1);
+        Stage primaryStage = new Stage();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
+        
+        
         // update the table
         fitterTable.refresh();
 
@@ -584,4 +561,7 @@ public class Controller implements Initializable {
 
     }
 
+    
+
 }
+

@@ -1,0 +1,31 @@
+.vbox-label {
+    -fx-text-fill: #326767;
+    -fx-font-size: 2.5em;
+    -fx-font-family: "Serif";
+    -fx-alignment: CENTER;
+}
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #326767;
+    -fx-text-fill: #326767;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    /* make buttons bigger */
+    -fx-min-width: 50px;
+    -fx-min-height: 30px;
+    /*center text*/
+    -fx-alignment: center;
+
+}
+
+.button:hover {
+    -fx-background-color: #3b7b7b;
+    -fx-text-fill: #ffffff;
+}
+
+.button:pressed {
+    -fx-background-color: #2c5e5e;
+}
+
+

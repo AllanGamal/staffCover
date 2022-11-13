@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch fitterCompetencyList",
+            "request": "launch",
+            "mainClass": "hellofx.fitterCompetencyList",
+            "projectName": "staffCover_7591c643"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "Main",
