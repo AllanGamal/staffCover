@@ -30,11 +30,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import hellofx.deparment.*;
 
 // implements Initializable and add initialize method
-public class Controller implements Initializable   {
+public class Controller implements Initializable  {
 
-    Department department;
+
+	static Department department;
 
     @FXML
     private HBox tPane;
@@ -77,9 +79,10 @@ public class Controller implements Initializable   {
             String nameID = fitterTable.getSelectionModel().getSelectedItem().getName();
             if (e.getClickCount() == 2) {
                 try {
-                    Scene newPopup = newPopup("fxml/fitterCompetencyList.fxml", nameID);
+                    Scene newPopup = newPopup("fxml/FitterCompetencyList.fxml", nameID);
                     addRestOfStations(newPopup, nameID);
                     addCompetencyStations(newPopup, nameID);
+                 
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     System.out.println("Funkar ej");
@@ -402,7 +405,7 @@ public class Controller implements Initializable   {
     @FXML
     void testyytestyy(ActionEvent event) throws IOException {
         // open new window from the fittercompetencylist.fxml
-        Parent root1 = FXMLLoader.load(getClass().getResource("fxml/fitterCompetencyList.fxml"));
+        Parent root1 = FXMLLoader.load(getClass().getResource("fxml/FitterCompetencyList.fxml"));
         Scene scene = new Scene(root1);
         Stage primaryStage = new Stage();
         primaryStage.setScene(scene);
@@ -586,26 +589,24 @@ public class Controller implements Initializable   {
 
         // iv ID of lv is "abc", add the fitters to the listview
 
-        // unless the station is not in the fitter (ID) competency list, add the stations to the listview
+        // add all the stations to the listview from every team
         for (int i = 0; i < department.getTeamList().length; i++) {
             for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
-                for (int k = 0; k < department.getTeamList()[i].getFitterList().length; k++) {
-                    if (department.getTeamList()[i].getFitterList()[k].getName().equals(ID)) {
-                        for (int l = 0; l < department.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) {
-                            if (!department.getTeamList()[i].getFitterList()[k].getCompetency()[l]
-                                    .equals(department.getTeamList()[i].getStationList()[j])) {
-                                lv.getItems().add(department.getTeamList()[i].getStationList()[j]);
-                            }
-                        }
-                        break;
+                lv.getItems().add(department.getTeamList()[i].getStationList()[j]);
+            }
+        }
+        // remove if fitter already got the competency
+        for (int i = 0; i < department.getTeamList().length; i++) {
+            for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                if (department.getTeamList()[i].getFitterList()[j].getName().equals(ID)) {
+                    for (int k = 0; k < department.getTeamList()[i].getFitterList()[j].getCompetency().length; k++) {
+                        lv.getItems().remove(department.getTeamList()[i].getFitterList()[j].getCompetency()[k]);
                     }
-                    
                 }
             }
         }
 
-        // update the table
-        fitterTable.refresh();
+        
     }
 
     private void addCompetencyStations(Scene scene, String nameID) {
@@ -622,6 +623,11 @@ public class Controller implements Initializable   {
 
             }
         }
+    }
+
+
+    public static Department getDepartment() {
+        return department;
     }
 
 

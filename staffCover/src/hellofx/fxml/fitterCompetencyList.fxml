@@ -20,7 +20,7 @@
             </ListView>
             <AnchorPane>
                <children>
-                  <Button fx:id="addToComList" layoutX="102.0" layoutY="7.0" mnemonicParsing="false" text="Lägg till" />
+                  <Button fx:id="addToComList" layoutX="102.0" layoutY="7.0" mnemonicParsing="false" onAction="#addStToComp" text="Lägg till" />
                </children>
             </AnchorPane>
          </children>
