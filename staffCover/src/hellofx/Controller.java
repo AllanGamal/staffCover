@@ -36,7 +36,7 @@ import hellofx.deparment.*;
 public class Controller implements Initializable  {
 
 
-	static Department department;
+	public static Department department;
 
     @FXML
     private HBox tPane;
@@ -347,7 +347,7 @@ public class Controller implements Initializable  {
                 }
 
                 String fitterName = dialog2.getEditor().getText();
-                Fitter fitter = new Fitter(department, fitterName);
+                Fitter fitter = new Fitter(this.department, fitterName);
 
                 // add the fitter to the team with the same id as the button
                 for (int i = 0; i < department.getTeamList().length; i++) {
@@ -355,6 +355,7 @@ public class Controller implements Initializable  {
                         department.getTeamList()[i].addFitter(fitter);
                     }
                 }
+                
 
                 // add the fitter to the listview
                 lvR.getItems().add(dialog2.getEditor().getText());
@@ -609,7 +610,7 @@ public class Controller implements Initializable  {
         
     }
 
-    private void addCompetencyStations(Scene scene, String nameID) {
+    public void addCompetencyStations(Scene scene, String nameID) {
         ListView<String> lv;
         lv = (ListView<String>) scene.lookup(".listview-comlist");
 

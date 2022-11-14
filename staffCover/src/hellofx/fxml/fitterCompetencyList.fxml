@@ -13,7 +13,7 @@
       <VBox prefHeight="600.0" prefWidth="255.0" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="50.0" prefWidth="250.0" styleClass="vbox-label" text="Alla stationer" />
-            <ListView fx:id="abc" prefHeight="500.0" prefWidth="250.0" styleClass="listview-allcomlist">
+            <ListView prefHeight="500.0" prefWidth="250.0" styleClass="listview-allcomlist">
                <VBox.margin>
                   <Insets left="5.0" />
                </VBox.margin>
@@ -37,7 +37,7 @@
             </ListView>
             <AnchorPane>
                <children>
-                  <Button fx:id="removeFrComList" layoutX="102.0" layoutY="7.0" mnemonicParsing="false" text="Ta bort" />
+                  <Button fx:id="removeFrComList" layoutX="102.0" layoutY="7.0" mnemonicParsing="false" onAction="#removeFrComp" text="Ta bort" />
                </children>
             </AnchorPane>
          </children>
