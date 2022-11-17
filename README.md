@@ -26,8 +26,13 @@ Check if understaffed
    ----
    **Scroll down for a diary like documentation**
    --
+   <h3>Design of Classes</h3>
    
-   <h3>GUI Design</h3>
+   <p>Designing of the classes needed for the project, will probably change things later</p>
+
+  <img src="/images/classDesign.png" width="60%" height="60%" >
+  
+  <h3>GUI Design</h3>
    
   <p>Designed the basic template for the application with a home, teams and employee tabs, giving it room to expande the project with potentially more tabs. Also added added, change and remove-buttons for both the teams and employees tab to their respective table.
   
@@ -37,8 +42,21 @@ Check if understaffed
   <img src="/images/teams.jpg" >
   <img src="/images/personal.jpg" >
    
-   <h3>Design of Classes</h3>
+   <h3>Design update and functionality implementations</h3>
    
-   <p>Designing of the classes needed for the project, will probably change things later</p>
-
-  <img src="/images/classDesign.png" >
+  <p>
+  Updated the design on the "Team" page so I have list of stations and employees in two different list within the team, instead of making a table. Table in this case do not work since I wanted two independently columns. Also added functionality to add team/remove, stations and employees, and also able to add/remove competency to a list within every employee.
+  </p>
+  
+<h4>Design update and added functionality of the team page</h4>
+  <img src="/images/teams2.jpg" >
+  
+  <h4>Add/remove employee functionality</h4>
+  <img src="/images/personal2.jpg" >
+  
+  <h4>Add/remove competency of employee functionality</h4>
+  <img src="/images/addcomp.jpg"  width="50%" height="50%" >
+  
+  
+   
+   
