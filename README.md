@@ -32,6 +32,8 @@ Check if understaffed
 
   <img src="/images/classDesign.png" width="60%" height="60%" >
   
+  --------
+  
   <h3>GUI Design</h3>
    
   <p>Designed the basic template for the application with a home, teams and employee tabs, giving it room to expande the project with potentially more tabs. Also added added, change and remove-buttons for both the teams and employees tab to their respective table.
@@ -41,6 +43,8 @@ Check if understaffed
 
   <img src="/images/teams.jpg" >
   <img src="/images/personal.jpg" >
+  
+  --------
    
    <h3>Design update and functionality implementations</h3>
    
@@ -57,6 +61,6 @@ Check if understaffed
   <h4>Add/remove competency of employee functionality</h4>
   <img src="/images/addcomp.jpg"  width="50%" height="50%" >
   
-  
+  --------
    
    
