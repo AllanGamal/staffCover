@@ -48,9 +48,6 @@ public class Controller implements Initializable  {
     private TableColumn<Fitter, Boolean> availabilityCol;
 
     @FXML
-    private TableColumn<Fitter, ComboBox> competencyCol;
-
-    @FXML
     private TableColumn<Fitter, String> idCol;
 
     @FXML
@@ -65,12 +62,12 @@ public class Controller implements Initializable  {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
+        
         // TODO Auto-generated method stub
         department = new Department("Johan");
         fitterTable.setItems(list);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
-        competencyCol.setCellValueFactory(new PropertyValueFactory<>("competency"));
         availabilityCol.setCellValueFactory(new PropertyValueFactory<>("availability"));
 
         // if row in table is double clicked

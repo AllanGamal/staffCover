@@ -109,10 +109,9 @@
                            <center>
                               <TableView fx:id="fitterTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <columns>
-                                    <TableColumn fx:id="nameCol" prefWidth="254.0" text="Namn" />
-                                    <TableColumn fx:id="competencyCol" prefWidth="369.0" text="Kompetens" />
-                                    <TableColumn fx:id="availabilityCol" minWidth="0.0" prefWidth="234.0" text="Tillänglighet" />
-                                    <TableColumn fx:id="idCol" minWidth="0.0" prefWidth="241.0" text="ID" />
+                                    <TableColumn fx:id="nameCol" prefWidth="514.0" text="Namn" />
+                                    <TableColumn fx:id="availabilityCol" minWidth="0.0" prefWidth="318.0" text="Tillänglighet" />
+                                    <TableColumn fx:id="idCol" minWidth="0.0" prefWidth="446.0" text="ID" />
                                  </columns>
                               </TableView>
                            </center>
