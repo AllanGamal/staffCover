@@ -2,31 +2,24 @@ package hellofx;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 import hellofx.deparment.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 // implements Initializable and add initialize method
-public class Controller implements Initializable  {
+public class Controller implements Initializable {
 
-
-	public static Department department;
+    public static Department department;
 
     @FXML
     private HBox tPane;
@@ -47,12 +40,10 @@ public class Controller implements Initializable  {
     private ScrollPane scrollPlane;
 
     ObservableList<Fitter> list = FXCollections.observableArrayList();
-    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-        
+
         // TODO Auto-generated method stub
         department = new Department("Johan");
         fitterTable.setItems(list);
@@ -69,15 +60,14 @@ public class Controller implements Initializable  {
                     Scene newPopup = newPopup("fxml/FitterCompetencyList.fxml", nameID);
                     addRestOfStations(newPopup, nameID);
                     addCompetencyStations(newPopup, nameID);
-                 
+
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     System.out.println("Funkar ej");
                 }
             }
-        });  
+        });
     }
-
 
     @FXML
     void addTeamClick(ActionEvent event) {
@@ -342,15 +332,13 @@ public class Controller implements Initializable  {
                         department.getTeamList()[i].addFitter(fitter);
                     }
                 }
-                
 
                 // add the fitter to the listview
                 lvR.getItems().add(dialog2.getEditor().getText());
 
-                
                 // add competency to the fitter
                 fitter.addCompetency("fitterName");
-                
+
                 addNameToTable();
 
             });
@@ -383,6 +371,123 @@ public class Controller implements Initializable  {
                 removeNameFromTable();
             });
 
+            // make it possible to rick click on an item in the listview with the fitters
+            lvR.setOnMouseClicked(e -> {
+                String id = MouseButton.SECONDARY.toString();
+                if (e.getButton() == MouseButton.SECONDARY) {
+                    // get the selected item
+                    String selectedItem = lvR.getSelectionModel().getSelectedItem();
+
+                    // create a context menu
+                    ContextMenu contextMenu = new ContextMenu();
+                    // create a menu item
+                    MenuItem menuItem = new MenuItem("Byt team");
+                    // add the menu item to the context menu
+                    contextMenu.getItems().add(menuItem);
+                    // set the context menu on the listview
+                    lvR.setContextMenu(contextMenu);
+                    // set the action for the menu item
+                    menuItem.setOnAction(e2 -> {
+
+                        // get teamname of the fitter
+                        String teamName = "";
+                        for (int i = 0; i < department.getTeamList().length; i++) {
+                            for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                                if (department.getTeamList()[i].getFitterList()[j].getName().equals(selectedItem)) {
+                                    teamName = department.getTeamList()[i].getTeamName();
+                                }
+                            }
+                        }
+
+                        // choice dialog to choose a team among the existing teams
+                        // make an arraylist from the team department.getTeamList()
+                        ArrayList<String> teamList = new ArrayList<String>();
+                        for (int i = 0; i < department.getTeamList().length; i++) {
+                            // if teamName is not the same as the teamName of which the fitter is already in
+                            if (!department.getTeamList()[i].getTeamName().equals(teamName)) {
+                                teamList.add(department.getTeamList()[i].getTeamName());
+                            }
+
+                        }
+
+                        // choice dialog box to choose from the teamList
+                        ChoiceDialog<String> changeTeam = new ChoiceDialog<>(teamList.get(0), teamList);
+
+                        changeTeam.setTitle("Byt team");
+                        changeTeam.setHeaderText("Byt team");
+                        changeTeam.setContentText("Välj ett team att byta till:");
+
+                        // Traditional way to get the response value.
+                        Optional<String> result = changeTeam.showAndWait();
+
+                        // if the user clicks ok, move the fitter to the selected team
+                        if (result.isPresent()) {
+                            // get the selected team
+                            String selectedTeam = result.get();
+                            // get the selected fitter
+                            String selectedFitter = lvR.getSelectionModel().getSelectedItem();
+
+                            
+
+                            // move the fitter to the selected team
+                            for (int i = 0; i < department.getTeamList().length; i++) {
+                                if (department.getTeamList()[i].getTeamName().equals(selectedTeam)) {
+                                    for (int j = 0; j < department.getTeamList().length; j++) {
+                                        for (int k = 0; k < department.getTeamList()[j].getFitterList().length; k++) {
+                                            if (department.getTeamList()[j].getFitterList()[k].getName()
+                                                    .equals(selectedFitter)) {
+                                                //temp = department.getTeamList()[j].getFitterList()[k];
+                                                // make a clone of the fitter to be moved
+                                                Fitter temp = (Fitter) department.getTeamList()[j].getFitterList()[k];
+                                                // remove the fitter from the team
+                                                department.getTeamList()[j].removeFitter(temp);
+                                                // add the fitter to the selected team
+                                                department.getTeamList()[i].addFitter(temp);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            Parent parent = bp.getParent();
+                            for (int i = 0; i < parent.getChildrenUnmodifiable().size(); i++) {
+                                // loop through all the children of the parent and count how many listviews
+                                // there are
+                                for (int j = 0; j < ((Parent) parent.getChildrenUnmodifiable().get(i))
+                                        .getChildrenUnmodifiable()
+                                        .size(); j++) {
+
+                                    Node node = ((Parent) parent.getChildrenUnmodifiable().get(i))
+                                            .getChildrenUnmodifiable().get(j);
+
+                                    // if the child is an instance of listview print "+1"
+                                    if (node.getClass().equals(ListView.class)) {
+
+                                        // print the ID of the listview
+                                        System.out.println(((Parent) parent.getChildrenUnmodifiable().get(i))
+                                                .getChildrenUnmodifiable().get(j).getId());
+
+                                        // if the id of the listview is selectedTeam + "P"
+                                        if (((Parent) parent.getChildrenUnmodifiable().get(i)).getChildrenUnmodifiable()
+                                                .get(j).getId().equals(selectedTeam + "P")) {
+                                            // add the fitter to the listview
+                                            ((ListView<String>) ((Parent) parent.getChildrenUnmodifiable().get(i))
+                                                    .getChildrenUnmodifiable().get(j)).getItems().add(selectedFitter);
+                                        }
+                                    }
+                                }
+                            }
+
+                            // remove the fitter from the listview
+                            lvR.getItems().remove(selectedFitter);
+                            
+
+                        }
+
+                    });
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -392,6 +497,7 @@ public class Controller implements Initializable  {
 
     @FXML
     void testyytestyy(ActionEvent event) throws IOException {
+        /*
         // open new window from the fittercompetencylist.fxml
         Parent root1 = FXMLLoader.load(getClass().getResource("fxml/FitterCompetencyList.fxml"));
         Scene scene = new Scene(root1);
@@ -401,15 +507,16 @@ public class Controller implements Initializable  {
 
         ListView<String> lv;
 
-        // if there is a listview with the class "listview-allcomlist", add a id "abc" to it
+        // if there is a listview with the class "listview-allcomlist", add a id "abc"
+        // to it
         if (scene.lookup(".listview-allcomlist") != null) {
             lv = (ListView<String>) scene.lookup(".listview-allcomlist");
             lv.setId("abc");
         }
-     
+
         // update the table
         fitterTable.refresh();
-
+         */
     }
 
     @FXML
@@ -522,7 +629,6 @@ public class Controller implements Initializable  {
         }
     }
 
-
     void addNameToTable() {
         // add the fitter to the table if the fitter is not already in the table
         for (int i = 0; i < department.getTeamList().length; i++) {
@@ -556,6 +662,7 @@ public class Controller implements Initializable  {
         }
 
     }
+
     public Scene newPopup(String fxml, String name) throws IOException {
         Parent root1 = FXMLLoader.load(getClass().getResource(fxml));
         Scene scene = new Scene(root1);
@@ -594,7 +701,6 @@ public class Controller implements Initializable  {
             }
         }
 
-        
     }
 
     public void addCompetencyStations(Scene scene, String nameID) {
@@ -613,12 +719,8 @@ public class Controller implements Initializable  {
         }
     }
 
-
     public static Department getDepartment() {
         return department;
     }
 
-
 }
-
-
