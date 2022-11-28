@@ -463,10 +463,6 @@ public class Controller implements Initializable {
                                     // if the child is an instance of listview print "+1"
                                     if (node.getClass().equals(ListView.class)) {
 
-                                        // print the ID of the listview
-                                        System.out.println(((Parent) parent.getChildrenUnmodifiable().get(i))
-                                                .getChildrenUnmodifiable().get(j).getId());
-
                                         // if the id of the listview is selectedTeam + "P"
                                         if (((Parent) parent.getChildrenUnmodifiable().get(i)).getChildrenUnmodifiable()
                                                 .get(j).getId().equals(selectedTeam + "P")) {
@@ -480,6 +476,19 @@ public class Controller implements Initializable {
 
                             // remove the fitter from the listview
                             lvR.getItems().remove(selectedFitter);
+                            // print the name of the fitter and all the competency of the fitter
+                            System.out.println(selectedFitter);
+                            for (int i = 0; i < department.getTeamList().length; i++) {
+                                for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                                    if (department.getTeamList()[i].getFitterList()[j].getName().equals(selectedFitter)) {
+                                        for (int k = 0; k < department.getTeamList()[i].getFitterList()[j]
+                                                .getCompetency().length; k++) {
+                                            System.out.println(department.getTeamList()[i].getFitterList()[j]
+                                                    .getCompetency()[k]);
+                                        }
+                                    }
+                                }
+                            }
                             
 
                         }

@@ -42,16 +42,16 @@ public class FitterCompetencyList {
         
         // check if there is a fitter with the name fitterName in the department
         for (int i = 0; i < department.getTeamList().length; i++) {
-            System.out.println("team: " + department.getTeamList()[i].getTeamName());
+            //System.out.println("team: " + department.getTeamList()[i].getTeamName());
             for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
-                System.out.println("fitter: " + department.getTeamList()[i].getFitterList()[j].getName());
+                //System.out.println("fitter: " + department.getTeamList()[i].getFitterList()[j].getName());
                 if (department.getTeamList()[i].getFitterList()[j].getName().equals(fitterName)) {
-                    System.out.print("fitter found");
+                    //System.out.print("fitter found");
 
                     department.getTeamList()[i].getFitterList()[j].addCompetency(selectedItem);
                     lvr.getItems().add(selectedItem);
                     lvl.getItems().remove(selectedItem);
-                    System.out.println(selectedItem);
+                    //System.out.println(selectedItem);
                     
                 }
             }
@@ -83,7 +83,7 @@ public class FitterCompetencyList {
                     Controller.getDepartment().getTeamList()[i].getFitterList()[j].removeCompetency(selectedItem);
                     lvr.getItems().add(selectedItem);
                     lvl.getItems().remove(selectedItem);
-                    System.out.println(selectedItem);
+                    //System.out.println(selectedItem);
                     break;
                 }
             }
