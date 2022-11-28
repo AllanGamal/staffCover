@@ -337,7 +337,7 @@ public class Controller implements Initializable {
                 lvR.getItems().add(dialog2.getEditor().getText());
 
                 // add competency to the fitter
-                fitter.addCompetency("fitterName");
+        
 
                 addNameToTable();
 
@@ -479,7 +479,9 @@ public class Controller implements Initializable {
                             // print the name of the fitter and all the competency of the fitter
                             System.out.println(selectedFitter);
                             for (int i = 0; i < department.getTeamList().length; i++) {
+                                System.out.println(department.getTeamList()[i].getTeamName());
                                 for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                                    System.out.println(department.getTeamList()[i].getFitterList()[j].getName());
                                     if (department.getTeamList()[i].getFitterList()[j].getName().equals(selectedFitter)) {
                                         for (int k = 0; k < department.getTeamList()[i].getFitterList()[j]
                                                 .getCompetency().length; k++) {
