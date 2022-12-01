@@ -530,62 +530,50 @@ public class Controller implements Initializable {
          */
     }
 
-    @FXML
-    void addStationClick(ActionEvent event) {
+    
 
+    @FXML
+    void removeClick(ActionEvent event) {
+        // choice dialog to choose a team among the existing teams
         // make an arraylist from the team department.getTeamList()
         ArrayList<String> teamList = new ArrayList<String>();
         for (int i = 0; i < department.getTeamList().length; i++) {
+            // if teamName is not the same as the teamName of which the fitter is already in
+
             teamList.add(department.getTeamList()[i].getTeamName());
+
         }
 
         // choice dialog box to choose from the teamList
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(teamList.get(0), teamList);
-        dialog.setTitle("Välj team");
-        dialog.setHeaderText("Välj team för station");
-        dialog.setContentText("Välj team:");
-        dialog.showAndWait();
+        ChoiceDialog<String> changeTeam = new ChoiceDialog<>(teamList.get(0), teamList);
+        changeTeam.setTitle("Ta bort team");
+        changeTeam.setHeaderText("Ta bort team");
+        changeTeam.setContentText("Team att ta bort:");
+        changeTeam.showAndWait();
 
         // if the user clicks cancel, return
-        if (dialog.getResult() == null) {
+        if (changeTeam.getResult() == null) {
             return;
         }
 
-        // dialog box to enter the station name
-        TextInputDialog dialog2 = new TextInputDialog("Station name");
-        dialog2.setTitle("Lägg till station");
-        dialog2.setHeaderText("Lägg till station");
-        dialog2.setContentText("Ange stationens namn:");
-        dialog2.showAndWait();
-
-        // if the user clicks cancel, return
-        if (dialog2.getResult() == null) {
-            return;
-        }
-
-        // check if the station already exists
+        // remove the team from the department
+        String teamName = changeTeam.getResult();
         for (int i = 0; i < department.getTeamList().length; i++) {
-
-            for (int j = 0; j < department.getTeamList()[i].getStationList().length; j++) {
-
-                if (department.getTeamList()[i].getStationList()[j]
-                        .equals(dialog2.getEditor().getText())) {
-                    // if the station already exists, show an alert
+            if (department.getTeamList()[i].getTeamName().equals(teamName)) {
+                if (department.getTeamList()[i].getFitterList().length == 0) {
+                    department.removeTeam(teamName);
+                } else {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
-                    alert.setHeaderText("Station existerar redan");
-                    alert.setContentText("Station med samma namn existerar redan, vänligen välj ett annat namn");
+                    alert.setHeaderText("Teamet har montörer");
+                    alert.setContentText("Ta bort eller flytta allan montörer till ett annat team innan du tar bort teamet");
                     alert.showAndWait();
                     return;
                 }
             }
-            // add the station to the team
-            if (department.getTeamList()[i].getTeamName().equals(dialog.getResult())) {
-                department.getTeamList()[i].addStation(department, dialog2.getEditor().getText());
-            }
         }
 
-        // search through the tilepane for the team
+        // remove the team from the tilepane
         for (int i = 0; i < tPane.getChildren().size(); i++) {
             // if the tPane includes a borderpane
             if (tPane.getChildren().get(i) instanceof BorderPane) {
@@ -594,50 +582,16 @@ public class Controller implements Initializable {
 
                     // if the id of the listview is the same as the team name + S
                     if (((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getId()
-                            .equals(dialog.getResult() + "S")) {
-                        // add the station to the listview
-                        ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getItems()
-                                .add(dialog2.getEditor().getText());
-                    }
-                    // add the station to the listview
-
-                }
-
-            }
-        }
-
-    }
-
-    @FXML
-    void removeClick(ActionEvent event) {
-        // if listview item is selected, remove it
-        for (int i = 0; i < tPane.getChildren().size(); i++) {
-            if (tPane.getChildren().get(i) instanceof BorderPane) {
-                if (((BorderPane) tPane.getChildren().get(i)).getLeft() instanceof ListView) {
-                    if (((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getSelectionModel()
-                            .getSelectedItem() != null) {
-                        ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getItems().remove(
-                                ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getSelectionModel()
-                                        .getSelectedIndex());
-                        // remove from the team
-                        for (int j = 0; j < department.getTeamList().length; j++) {
-                            // string s = the selected item
-                            String s = (String) ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft())
-                                    .getSelectionModel().getSelectedItem();
-                            // if the team name is the same as the id of the listview
-                            if (department.getTeamList()[j].getTeamName()
-                                    .equals(((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft()).getId()
-                                            .substring(0,
-                                                    ((ListView) ((BorderPane) tPane.getChildren().get(i)).getLeft())
-                                                            .getId().length() - 1))) {
-                                // remove the station from the team
-                                department.getTeamList()[j].removeStation(s);
-                            }
-                        }
+                            .equals(changeTeam.getResult() + "S")) {
+                        // remove the team from the tilepane
+                        tPane.getChildren().remove(i);
                     }
                 }
             }
         }
+
+
+
     }
 
     void addNameToTable() {

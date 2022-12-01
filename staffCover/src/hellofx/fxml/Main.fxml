@@ -19,7 +19,14 @@
         <tabs>
             <Tab text="Hem">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="680.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <bottom>
+                              <Button mnemonicParsing="false" styleClass="button2" text="Super magisk knapp" BorderPane.alignment="CENTER" />
+                           </bottom>
+                        </BorderPane>
+                     </children></AnchorPane>
               </content>
             </Tab>
           <Tab text="Teams">
@@ -36,11 +43,6 @@
                                        </font>
                                     </Label>
                                     <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#addTeamClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till team">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#addStationClick" styleClass="button2" stylesheets="@../css/styling.css" text="Lägg till station">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
