@@ -14,9 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 // implements Initializable and add initialize method
 public class Controller implements Initializable {
@@ -504,7 +502,7 @@ public class Controller implements Initializable {
                         String selectedFitter = lvR.getSelectionModel().getSelectedItem();
                         
                         // get the fitter
-                        Fitter  fitter = null;
+                        Fitter fitter = null;
                         for (int i = 0; i < department.getTeamList().length; i++) {
                             for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
                                 if (department.getTeamList()[i].getFitterList()[j].getName().equals(selectedFitter)) {
@@ -513,17 +511,16 @@ public class Controller implements Initializable {
                                 }
                             }
                         }
-                        
                         fitter.toggleAvailability();
-                        // give the listview item text red color
+
                         
-                        
-                        
-                        fitterTable.refresh();
+                        //fitterTable.refresh();
                     });
-                    
+     
                 }
             });
+            // if item in listview is doubleclicked
+            
 
         } catch (Exception e) {
             e.printStackTrace();
