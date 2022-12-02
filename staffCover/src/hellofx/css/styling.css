@@ -265,3 +265,12 @@
     -fx-alignment: CENTER;
 }
 
+.test {
+    -fx-background-color: #326767;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-border-radius: 5px;
+    /* make buttons bigger */
+    -fx-min-width: 50px;
+    -fx-min-height: 30px;
+}

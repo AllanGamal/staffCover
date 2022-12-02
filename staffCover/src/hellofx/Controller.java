@@ -14,7 +14,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 // implements Initializable and add initialize method
 public class Controller implements Initializable {
@@ -333,10 +335,9 @@ public class Controller implements Initializable {
                     }
                 }
 
-                // add the fitter to the listview
-                lvR.getItems().add(dialog2.getEditor().getText());
 
-                // add competency to the fitter
+                lvR.getItems().add(fitterName);
+             
         
 
                 addNameToTable();
@@ -371,7 +372,7 @@ public class Controller implements Initializable {
                 removeNameFromTable();
             });
 
-            // make it possible to rick click on an item in the listview with the fitters
+            // toggle the avialability of the fitter through right click
             lvR.setOnMouseClicked(e -> {
                 String id = MouseButton.SECONDARY.toString();
                 if (e.getButton() == MouseButton.SECONDARY) {
@@ -382,8 +383,10 @@ public class Controller implements Initializable {
                     ContextMenu contextMenu = new ContextMenu();
                     // create a menu item
                     MenuItem menuItem = new MenuItem("Byt team");
+                    MenuItem menuItem2 = new MenuItem("Tillänglighet");
                     // add the menu item to the context menu
                     contextMenu.getItems().add(menuItem);
+                    contextMenu.getItems().add(menuItem2);
                     // set the context menu on the listview
                     lvR.setContextMenu(contextMenu);
                     // set the action for the menu item
@@ -496,6 +499,29 @@ public class Controller implements Initializable {
                         }
 
                     });
+                    menuItem2.setOnAction(e3 -> {
+                        // get the selected fitter
+                        String selectedFitter = lvR.getSelectionModel().getSelectedItem();
+                        
+                        // get the fitter
+                        Fitter  fitter = null;
+                        for (int i = 0; i < department.getTeamList().length; i++) {
+                            for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
+                                if (department.getTeamList()[i].getFitterList()[j].getName().equals(selectedFitter)) {
+                                    fitter = department.getTeamList()[i].getFitterList()[j];
+
+                                }
+                            }
+                        }
+                        
+                        fitter.toggleAvailability();
+                        // give the listview item text red color
+                        
+                        
+                        
+                        fitterTable.refresh();
+                    });
+                    
                 }
             });
 
