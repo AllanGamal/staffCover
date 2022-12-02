@@ -11,10 +11,13 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 // implements Initializable and add initialize method
 public class Controller implements Initializable {
@@ -333,10 +336,7 @@ public class Controller implements Initializable {
                     }
                 }
 
-
                 lvR.getItems().add(fitterName);
-             
-        
 
                 addNameToTable();
 
@@ -375,7 +375,10 @@ public class Controller implements Initializable {
                 String id = MouseButton.SECONDARY.toString();
                 if (e.getButton() == MouseButton.SECONDARY) {
                     // get the selected item
-                    String selectedItem = lvR.getSelectionModel().getSelectedItem();
+                    
+
+                    
+                    
 
                     // create a context menu
                     ContextMenu contextMenu = new ContextMenu();
@@ -389,6 +392,13 @@ public class Controller implements Initializable {
                     lvR.setContextMenu(contextMenu);
                     // set the action for the menu item
                     menuItem.setOnAction(e2 -> {
+                        String selectedItem = lvR.getSelectionModel().getSelectedItem();
+
+                        // if // if selectedFitter includes " (EJ TILLGÄNGLIG)"
+                        if (selectedItem.contains("      (EJ TILLGÄNGLIG)")) {
+                            // remove " (EJ TILLGÄNGLIG)" from selectedFitter
+                            selectedItem = selectedItem.substring(0, selectedItem.length() - 22);
+                        }
 
                         // get teamname of the fitter
                         String teamName = "";
@@ -420,6 +430,7 @@ public class Controller implements Initializable {
 
                         // Traditional way to get the response value.
                         Optional<String> result = changeTeam.showAndWait();
+        
 
                         // if the user clicks ok, move the fitter to the selected team
                         if (result.isPresent()) {
@@ -427,8 +438,11 @@ public class Controller implements Initializable {
                             String selectedTeam = result.get();
                             // get the selected fitter
                             String selectedFitter = lvR.getSelectionModel().getSelectedItem();
-
-                            
+                            // if // if selectedFitter includes " (EJ TILLGÄNGLIG)"
+                            if (selectedFitter.contains("      (EJ TILLGÄNGLIG)")) {
+                                // remove " (EJ TILLGÄNGLIG)" from selectedFitter
+                                selectedFitter = selectedFitter.substring(0, selectedFitter.length() - 22);
+                            }
 
                             // move the fitter to the selected team
                             for (int i = 0; i < department.getTeamList().length; i++) {
@@ -437,13 +451,18 @@ public class Controller implements Initializable {
                                         for (int k = 0; k < department.getTeamList()[j].getFitterList().length; k++) {
                                             if (department.getTeamList()[j].getFitterList()[k].getName()
                                                     .equals(selectedFitter)) {
-                                                //temp = department.getTeamList()[j].getFitterList()[k];
+                                                // temp = department.getTeamList()[j].getFitterList()[k];
                                                 // make a clone of the fitter to be moved
                                                 Fitter temp = (Fitter) department.getTeamList()[j].getFitterList()[k];
                                                 // remove the fitter from the team
                                                 department.getTeamList()[j].removeFitter(temp);
                                                 // add the fitter to the selected team
                                                 department.getTeamList()[i].addFitter(temp);
+
+                                                // if selected fitter.availability() is false, add " (EJ TILLGÄNGLIG)"
+                                            if (!temp.getAvailability()) {
+                                                selectedFitter = selectedFitter + "      (EJ TILLGÄNGLIG)";
+                                            }
                                             }
                                         }
                                     }
@@ -468,8 +487,12 @@ public class Controller implements Initializable {
                                         if (((Parent) parent.getChildrenUnmodifiable().get(i)).getChildrenUnmodifiable()
                                                 .get(j).getId().equals(selectedTeam + "P")) {
                                             // add the fitter to the listview
+
                                             ((ListView<String>) ((Parent) parent.getChildrenUnmodifiable().get(i))
                                                     .getChildrenUnmodifiable().get(j)).getItems().add(selectedFitter);
+                                            // add a "p" to the fitter name in the listview
+                                           
+
                                         }
                                     }
                                 }
@@ -483,7 +506,8 @@ public class Controller implements Initializable {
                                 System.out.println(department.getTeamList()[i].getTeamName());
                                 for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
                                     System.out.println(department.getTeamList()[i].getFitterList()[j].getName());
-                                    if (department.getTeamList()[i].getFitterList()[j].getName().equals(selectedFitter)) {
+                                    if (department.getTeamList()[i].getFitterList()[j].getName()
+                                            .equals(selectedFitter)) {
                                         for (int k = 0; k < department.getTeamList()[i].getFitterList()[j]
                                                 .getCompetency().length; k++) {
                                             System.out.println(department.getTeamList()[i].getFitterList()[j]
@@ -492,15 +516,18 @@ public class Controller implements Initializable {
                                     }
                                 }
                             }
-                            
 
                         }
 
                     });
                     menuItem2.setOnAction(e3 -> {
-                        // get the selected fitter
                         String selectedFitter = lvR.getSelectionModel().getSelectedItem();
-                        
+                        // if selectedFitter includes " (EJ TILLGÄNGLIG)"
+                        if (selectedFitter.contains("      (EJ TILLGÄNGLIG)")) {
+                            // remove " (EJ TILLGÄNGLIG)" from selectedFitter
+                            selectedFitter = selectedFitter.substring(0, selectedFitter.length() - 22);
+                        }
+
                         // get the fitter
                         Fitter fitter = null;
                         for (int i = 0; i < department.getTeamList().length; i++) {
@@ -512,15 +539,24 @@ public class Controller implements Initializable {
                             }
                         }
                         fitter.toggleAvailability();
+                        boolean fitterAvailability = fitter.getAvailability();
 
-                        
-                        //fitterTable.refresh();
+                        // if the fitteravailability is false, then add text "ej tillgänglig" to the
+                        // fitter
+                        if (!fitterAvailability) {
+                            lvR.getItems().set(lvR.getSelectionModel().getSelectedIndex(),
+                                    selectedFitter + "      (EJ TILLGÄNGLIG)");
+                        } else {
+                            lvR.getItems().set(lvR.getSelectionModel().getSelectedIndex(), selectedFitter);
+                        }
+
+                        // fitterTable.refresh();
                     });
-     
+
                 }
             });
-            // if item in listview is doubleclicked
-            
+            // if item in listview is doubleclicked change the backgrouynd color of the
+            // clicked row
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -532,28 +568,28 @@ public class Controller implements Initializable {
     @FXML
     void testyytestyy(ActionEvent event) throws IOException {
         /*
-        // open new window from the fittercompetencylist.fxml
-        Parent root1 = FXMLLoader.load(getClass().getResource("fxml/FitterCompetencyList.fxml"));
-        Scene scene = new Scene(root1);
-        Stage primaryStage = new Stage();
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        ListView<String> lv;
-
-        // if there is a listview with the class "listview-allcomlist", add a id "abc"
-        // to it
-        if (scene.lookup(".listview-allcomlist") != null) {
-            lv = (ListView<String>) scene.lookup(".listview-allcomlist");
-            lv.setId("abc");
-        }
-
-        // update the table
-        fitterTable.refresh();
+         * // open new window from the fittercompetencylist.fxml
+         * Parent root1 =
+         * FXMLLoader.load(getClass().getResource("fxml/FitterCompetencyList.fxml"));
+         * Scene scene = new Scene(root1);
+         * Stage primaryStage = new Stage();
+         * primaryStage.setScene(scene);
+         * primaryStage.show();
+         * 
+         * ListView<String> lv;
+         * 
+         * // if there is a listview with the class "listview-allcomlist", add a id
+         * "abc"
+         * // to it
+         * if (scene.lookup(".listview-allcomlist") != null) {
+         * lv = (ListView<String>) scene.lookup(".listview-allcomlist");
+         * lv.setId("abc");
+         * }
+         * 
+         * // update the table
+         * fitterTable.refresh();
          */
     }
-
-    
 
     @FXML
     void removeClick(ActionEvent event) {
@@ -589,7 +625,8 @@ public class Controller implements Initializable {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText("Teamet har montörer");
-                    alert.setContentText("Ta bort eller flytta allan montörer till ett annat team innan du tar bort teamet");
+                    alert.setContentText(
+                            "Ta bort eller flytta allan montörer till ett annat team innan du tar bort teamet");
                     alert.showAndWait();
                     return;
                 }
@@ -612,8 +649,6 @@ public class Controller implements Initializable {
                 }
             }
         }
-
-
 
     }
 
