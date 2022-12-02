@@ -23,7 +23,10 @@
                      <children>
                         <BorderPane prefHeight="680.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <bottom>
-                              <Button mnemonicParsing="false" styleClass="button2" text="Super magisk knapp" BorderPane.alignment="CENTER" />
+                              <Button mnemonicParsing="false" onAction="#magicCalc" styleClass="button2" text="Superknappen" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" />
+                                 </BorderPane.margin></Button>
                            </bottom>
                         </BorderPane>
                      </children></AnchorPane>

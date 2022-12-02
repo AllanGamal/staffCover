@@ -11,13 +11,10 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 // implements Initializable and add initialize method
 public class Controller implements Initializable {
@@ -70,6 +67,35 @@ public class Controller implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    void magicCalc(ActionEvent event) {
+        // get the name of the selected row
+        
+        try {
+            Scene newPopup = newPopup("fxml/MagicCalc.fxml", "ComboWombo");
+            // add a tableview to the hbox with the ID "hBle"
+            HBox hBle = (HBox) newPopup.lookup("#hBle");
+            // add a tableview to the hbox with the ID "hBle" with 2 columns
+            TableView<String> table = new TableView<String>();
+            TableColumn<String, String> col1 = new TableColumn<String, String>("Column 1");
+            TableColumn<String, String> col2 = new TableColumn<String, String>("Column 2");
+            table.getColumns().add(col1);
+            table.getColumns().add(col2);
+            hBle.getChildren().add(table);
+            
+
+
+            
+
+
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("Funkar ej");
+        }
+    
+
     }
 
     @FXML
