@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import hellofx.popups.MagicCalc;
 
 // implements Initializable and add initialize method
 public class Controller implements Initializable {
@@ -72,31 +73,29 @@ public class Controller implements Initializable {
     @FXML
     void magicCalc(ActionEvent event) {
         // get the name of the selected row
-        
+
         try {
-            Scene newPopup = newPopup("fxml/MagicCalc.fxml", "ComboWombo");
-            // add a tableview to the hbox with the ID "hBle"
-            HBox hBle = (HBox) newPopup.lookup("#hBle");
-            // add a tableview to the hbox with the ID "hBle" with 2 columns
-            TableView<String> table = new TableView<String>();
-            TableColumn<String, String> col1 = new TableColumn<String, String>("Column 1");
-            TableColumn<String, String> col2 = new TableColumn<String, String>("Column 2");
-            table.getColumns().add(col1);
-            table.getColumns().add(col2);
-            hBle.getChildren().add(table);
-            
+            ArrayList arr = department.getCombo();
+            // print all item in the arraylist
+            for (int i = 0; i < arr.size(); i++) {
+                System.out.println(arr.get(i));
+            }
 
+
+
+            Scene newPopup = newPopup("fxml/magicCalc.fxml", "ComboWombo");
 
             
+            MagicCalc.addSolution(newPopup, "#vbox1");
 
-
-        } catch (IOException e1) {
+        } catch (IOException e2) {
             // TODO Auto-generated catch block
             System.out.println("Funkar ej");
         }
-    
 
     }
+
+    
 
     @FXML
     void addTeamClick(ActionEvent event) {

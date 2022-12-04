@@ -109,7 +109,7 @@ public class Department {
             }
             // Add the combination to the arraylist if it is not already there
             // If n-3 then three is missing and so on
-            if (temp.size() >= n) {
+            if (temp.size() >= n-3) {
                 out.add(temp.toString());
             }
 
@@ -139,7 +139,7 @@ public class Department {
     }
 
     /**
-     * Method to print the team list
+     * Method to print the team list 
      * @return teamList - the team list
      */
     public ArrayList<String> getCombo() {
@@ -161,9 +161,11 @@ public class Department {
         // loop through every fitter and add them to the linked list if the competency is matched
         for (int i = 0; i < this.getTeamList().length; i++) {
             for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) {
+                
                 for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) {
                     for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) {
                         if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k].getCompetency()[l]) {
+                            
                             arr[j].add(this.getTeamList()[i].getFitterList()[k].getName());
                         }
                     }
@@ -172,7 +174,10 @@ public class Department {
             }
         }
 
+        
+        
         return comboWombo(arr);
+        
     }
 
 }
