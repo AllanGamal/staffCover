@@ -42,7 +42,8 @@ public static void main(String[] args) {
     
     launch(args);
     // make a fitter object
-    Fitter fitter = new Fitter("John", "Smith");
+    
+    
     
 
     

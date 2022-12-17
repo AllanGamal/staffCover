@@ -1,5 +1,9 @@
 package hellofx.deparment;
 import java.util.*; 
+import hellofx.deparment.Department;
+import hellofx.deparment.Team;
+import hellofx.deparment.Fitter;
+
 public class Department {
 
 
@@ -142,42 +146,48 @@ public class Department {
      * Method to print the team list 
      * @return teamList - the team list
      */
-    public ArrayList<String> getCombo() {
-        // get the number of stations in the department
-        int numStations = 0;
-        
-        for (int i = 0; i < this.getTeamList().length; i++) {
-            numStations += this.getTeamList()[i].getStationList().length; 
-        }
-        LinkedList<String> []arr = new LinkedList[numStations];
-        System.out.println(numStations);
-        
-        for (int i = 0; i < numStations; i++) {
-            // make a new linked list for each station
-            arr[i] = new LinkedList<String>();
+    public LinkedList<String>[] getCombo() {
+    // get the number of stations in the department
+    int numStations = 0; // number of stations in the department
+    for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+        numStations += this.getTeamList()[i].getStationList().length;  // add the number of stations in each team to the total
+    }
+    LinkedList<String> []arr = new LinkedList[numStations]; // create an array of linked lists for each station
+    System.out.println(numStations); // print the number of stations
+    
+    for (int i = 0; i < numStations; i++) {
+        // make a new linked list for each station
+        arr[i] = new LinkedList<String>();
+    }
 
-        }
+    int count = 0;
 
-        // loop through every fitter and add them to the linked list if the competency is matched
-        for (int i = 0; i < this.getTeamList().length; i++) {
-            for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) {
-                
-                for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) {
-                    for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) {
-                        if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k].getCompetency()[l]) {
-                            
-                            arr[j].add(this.getTeamList()[i].getFitterList()[k].getName());
+    // loop through every fitter and add them to the linked list if the competency is matched and the fitter is available
+    for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+        for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in the team
+            arr[count] = new LinkedList<>(); // create a new linked list for this station
+            arr[count].add(this.getTeamList()[i].getStationList()[j]); // add the station to the linked list
+            
+            for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in the team
+                if (this.getTeamList()[i].getFitterList()[k].getAvailability()) { // check if the fitter is available
+                    for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) { // loop through every competency of the fitter
+                        if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k].getCompetency()[l]) { // if the competency matches the station
+                            arr[count].add(this.getTeamList()[i].getFitterList()[k].getName()); // add the fitter's name to the linked list for this station
                         }
                     }
-                    
                 }
             }
+            count++; // increment the count
         }
-
-        
-        
-        return comboWombo(arr);
-        
     }
+    // print the linked lists
+    for (int i = 0; i < arr.length; i++) {
+        System.out.println(arr[i]);
+    }
+
+    return arr;
+}
+
+   
 
 }
