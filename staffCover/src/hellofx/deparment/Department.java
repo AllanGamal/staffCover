@@ -209,14 +209,76 @@ public class Department {
             }
         }
 
-        // print comboWombo(arr)
-        ArrayList<String> test = comboWombo(arr);
+        
+        // Number of arrays
+        int n = arr.length;
 
-        for (int i = 0; i < test.size(); i++) {
-            System.out.println(test.get(i));
+        ArrayList<String> out = new ArrayList<String>();
+
+        // To keep track of next element in
+        // each of the n arrays
+        int[] indices = new int[n];
+
+        // Initialize with first element's index
+        for (int i = 0; i < n; i++)
+            indices[i] = 0;
+
+        while (true) {
+
+            // For every combination, add the first element of each array to the arraylist
+            ArrayList<String> temp = new ArrayList<String>();
+
+            for (int i = 0; i < n; i++) {
+                // if the array already contains the element, remove the list
+                // try {
+                try {
+                    if (temp.contains(arr[i].get(indices[i]))) {
+                        break;
+                    }
+                    temp.add(arr[i].get(indices[i]));
+                } catch (Exception e) {
+                    System.out.println("Error");
+                    return null;
+                }
+
+            }
+            // Generate combinations and add them to out
+            // Add the combination to the arraylist if it is not already there
+            // If the combination includes at least one fitter from each station
+            // or if it includes fitters from n-1, n-2, or n-3 stations, add it to the list
+            if (temp.size() >= n) {
+                out.add(temp.toString());
+            }
+
+            // Find the rightmost array that has more
+            // elements left after the current element
+            // in that array
+            int next = n - 1;
+            while (next >= 0 &&
+                    (indices[next] + 1 >= arr[next].size()))
+                next--;
+
+            // No such array is found so no more
+            // combinations left
+            if (next < 0){
+                // print out
+                for (int i = 0; i < out.size(); i++) {
+                    System.out.println(out.get(i));
+                }
+                return out;}
+
+            // If found move to next element in that
+            // array
+            indices[next]++;
+
+            // For all arrays to the right of this
+            // array current index again points to
+            // first element
+            for (int i = next + 1; i < n; i++) {
+                indices[i] = 0;
+            }
+
         }
-
-        return comboWombo(arr);
     }
 
 }
