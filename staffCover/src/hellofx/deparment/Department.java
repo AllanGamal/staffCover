@@ -1,26 +1,28 @@
 package hellofx.deparment;
-import java.util.*; 
+
+import java.util.*;
 import hellofx.deparment.Department;
 import hellofx.deparment.Team;
 import hellofx.deparment.Fitter;
 
 public class Department {
 
-
-    private String department;  
+    private String department;
     private ArrayList[] combo;
     private LinkedList<Team> teamList = new LinkedList<Team>(); // list of teams in the department
 
     /**
      * Constructor for the department class
+     * 
      * @param department
      */
     public Department(String department) {
         this.department = department;
     }
-    
+
     /**
      * Method to get the department name
+     * 
      * @return department - the department name
      */
     public String getDepartment() {
@@ -29,6 +31,7 @@ public class Department {
 
     /**
      * Method to set the department name
+     * 
      * @param department - the department name
      */
     public void setDepartment(String department) {
@@ -39,24 +42,26 @@ public class Department {
      * Method to add a team to the team list
      * Check if the team already exists
      * Adds the team to the list if it doesn't exist
+     * 
      * @param teamName - name of the team
      */
     public void addTeam(Object team) {
-        
-       // check if the team already exists
+
+        // check if the team already exists
         for (int i = 0; i < teamList.size(); i++) {
-            if ((teamList.get(i).getTeamName() == ((Team)team).getTeamName())) {
+            if ((teamList.get(i).getTeamName() == ((Team) team).getTeamName())) {
                 System.out.println("Team already exists");
                 return;
             }
         }
-    // add the object to the linked list if it is not already there
-        this.teamList.add((Team)team);
-        
+        // add the object to the linked list if it is not already there
+        this.teamList.add((Team) team);
+
     }
 
     /**
      * Method to remove a team from the team list
+     * 
      * @param teamName - name of the team
      */
     public void removeTeam(String teamName) {
@@ -71,24 +76,24 @@ public class Department {
 
     /**
      * Get the value of teamlist (team)
+     * 
      * @return the value of teamlist as an array
      */
     public Team[] getTeamList() {
         return teamList.toArray(new Team[teamList.size()]);
     }
-    
+
     /**
      * Method to pr
      * 
      * @param arr
-     * @return 
+     * @return
      */
     public ArrayList<String> comboWombo(LinkedList<String>[] arr) {
         // Number of arrays
         int n = arr.length;
 
         ArrayList<String> out = new ArrayList<String>();
-        
 
         // To keep track of next element in
         // each of the n arrays
@@ -98,22 +103,23 @@ public class Department {
         for (int i = 0; i < n; i++)
             indices[i] = 0;
 
-
         while (true) {
 
             // For every combination, add the first element of each array to the arraylist
             ArrayList<String> temp = new ArrayList<String>();
+
             for (int i = 0; i < n; i++) {
-                // if the array already contains the element, remove the list 
+                // if the array already contains the element, remove the list
                 if (temp.contains(arr[i].get(indices[i]))) {
                     break;
-                } 
+                }
                 temp.add(arr[i].get(indices[i]));
-                
+
             }
             // Add the combination to the arraylist if it is not already there
-            // If n-3 then three is missing and so on
-            if (temp.size() >= n-3) {
+            // If the combination includes at least one fitter from each station
+            // or if it includes fitters from n-1, n-2, or n-3 stations, add it to the list
+            if (temp.size() >= n) {
                 out.add(temp.toString());
             }
 
@@ -128,6 +134,8 @@ public class Department {
             // No such array is found so no more
             // combinations left
             if (next < 0)
+                // print the arraylist
+
                 return out;
 
             // If found move to next element in that
@@ -137,57 +145,78 @@ public class Department {
             // For all arrays to the right of this
             // array current index again points to
             // first element
-            for (int i = next + 1; i < n; i++)
+            for (int i = next + 1; i < n; i++) {
                 indices[i] = 0;
+            }
+
         }
+
     }
 
     /**
-     * Method to print the team list 
+     * Method to print the team list
+     * 
      * @return teamList - the team list
      */
-    public LinkedList<String>[] getCombo() {
-    // get the number of stations in the department
-    int numStations = 0; // number of stations in the department
-    for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
-        numStations += this.getTeamList()[i].getStationList().length;  // add the number of stations in each team to the total
-    }
-    LinkedList<String> []arr = new LinkedList[numStations]; // create an array of linked lists for each station
-    System.out.println(numStations); // print the number of stations
-    
-    for (int i = 0; i < numStations; i++) {
-        // make a new linked list for each station
-        arr[i] = new LinkedList<String>();
-    }
+    public ArrayList<String> getCombo() {
+        // get the number of stations in the department
+        int numStations = 0; // number of stations in the department
+        for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+            numStations += this.getTeamList()[i].getStationList().length; // add the number of stations in each team to
+                                                                          // the total
+        }
+        LinkedList<String>[] arr = new LinkedList[numStations]; // create an array of linked lists for each station
+        System.out.println(numStations); // print the number of stations
 
-    int count = 0;
+        for (int i = 0; i < numStations; i++) {
+            // make a new linked list for each station
+            arr[i] = new LinkedList<String>();
+        }
 
-    // loop through every fitter and add them to the linked list if the competency is matched and the fitter is available
-    for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
-        for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in the team
-            arr[count] = new LinkedList<>(); // create a new linked list for this station
-            arr[count].add(this.getTeamList()[i].getStationList()[j]); // add the station to the linked list
-            
-            for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in the team
-                if (this.getTeamList()[i].getFitterList()[k].getAvailability()) { // check if the fitter is available
-                    for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) { // loop through every competency of the fitter
-                        if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k].getCompetency()[l]) { // if the competency matches the station
-                            arr[count].add(this.getTeamList()[i].getFitterList()[k].getName()); // add the fitter's name to the linked list for this station
+        int count = 0;
+
+        // loop through every fitter and add them to the linked list if the competency
+        // is matched and the fitter is available
+        for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+            for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in
+                                                                                      // the team
+                arr[count] = new LinkedList<>(); // create a new linked list for this station
+                // arr[count].add(this.getTeamList()[i].getStationList()[j]); // add the station
+                // to the linked list
+
+                for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in
+                                                                                         // the team
+                    if (this.getTeamList()[i].getFitterList()[k].getAvailability()) { // check if the fitter is
+                                                                                      // available
+                        for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) { // loop
+                                                                                                                    // through
+                                                                                                                    // every
+                                                                                                                    // competency
+                                                                                                                    // of
+                                                                                                                    // the
+                                                                                                                    // fitter
+                            if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k]
+                                    .getCompetency()[l]) { // if the competency matches the station
+                                arr[count].add(this.getTeamList()[i].getFitterList()[k].getName()); // add the fitter's
+                                                                                                    // name to the
+                                                                                                    // linked list for
+                                                                                                    // this station
+                            }
                         }
                     }
                 }
+                count++; // increment the count
             }
-            count++; // increment the count
         }
-    }
-    // print the linked lists
-    for (int i = 0; i < arr.length; i++) {
-        System.out.println(arr[i]);
-    }
 
-    return arr;
-}
+        // print comboWombo(arr)
+        ArrayList<String> test = comboWombo(arr);
 
-   
+        for (int i = 0; i < test.size(); i++) {
+            System.out.println(test.get(i));
+        }
+
+        return comboWombo(arr);
+    }
 
 }
