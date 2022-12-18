@@ -159,6 +159,7 @@ public class Department {
      * @return teamList - the team list
      */
     public ArrayList<String> getCombo() {
+
         // get the number of stations in the department
         int numStations = 0; // number of stations in the department
         for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
@@ -183,24 +184,14 @@ public class Department {
                 arr[count] = new LinkedList<>(); // create a new linked list for this station
                 // arr[count].add(this.getTeamList()[i].getStationList()[j]); // add the station
                 // to the linked list
-
                 for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in
-                                                                                         // the team
                     if (this.getTeamList()[i].getFitterList()[k].getAvailability()) { // check if the fitter is
-                                                                                      // available
                         for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) { // loop
-                                                                                                                    // through
-                                                                                                                    // every
-                                                                                                                    // competency
-                                                                                                                    // of
-                                                                                                                    // the
-                                                                                                                    // fitter
+
                             if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k]
                                     .getCompetency()[l]) { // if the competency matches the station
                                 arr[count].add(this.getTeamList()[i].getFitterList()[k].getName()); // add the fitter's
-                                                                                                    // name to the
-                                                                                                    // linked list for
-                                                                                                    // this station
+
                             }
                         }
                     }
@@ -209,9 +200,26 @@ public class Department {
             }
         }
 
-        
+        // make a clone of the array
+
+        LinkedList<String>[] arr2 = new LinkedList[numStations];
+
+        for (int i = 0; i < arr.length; i++) {
+            arr2[i] = new LinkedList<>(); // create a new LinkedList for each element in the new array
+            arr2[i].addAll(arr[i]); // add all elements from the original array to the new array
+            // count the number of times null appears in the array
+        }
+
+        //
+
+        System.out.println("--------- Stationer matchade med fitters ---------");
+        // print the array
+        for (int i = 0; i < arr2.length; i++) {
+            System.out.println(arr2[i]);
+        }
+
         // Number of arrays
-        int n = arr.length;
+        int n = arr2.length;
 
         ArrayList<String> out = new ArrayList<String>();
 
@@ -223,49 +231,49 @@ public class Department {
         for (int i = 0; i < n; i++)
             indices[i] = 0;
 
-        while (true) {
+            while (true) {
 
-            // For every combination, add the first element of each array to the arraylist
-            ArrayList<String> temp = new ArrayList<String>();
-
-            for (int i = 0; i < n; i++) {
-                // if the array already contains the element, remove the list
-                // try {
-                try {
-                    if (temp.contains(arr[i].get(indices[i]))) {
-                        break;
+                // For every combination, add the first element of each array to the arraylist
+                ArrayList<String> temp = new ArrayList<String>();
+                int cnt = 0;
+                for (int i = 0; i < n; i++) {
+            
+                    // if the array already contains the element, remove the list
+                    // try {
+                    try {
+                        if (temp.contains(arr2[i].get(indices[i]))) {
+                            break;
+                        }
+                        temp.add(arr2[i].get(indices[i])); //
+                    } catch (Exception e) {
+                        // if an exception occurs (e.g., index out of bounds), add "null1" to the temp list
+                        temp.add("null1");
                     }
-                    temp.add(arr[i].get(indices[i]));
-                } catch (Exception e) {
-                    System.out.println("Error");
-                    return null;
+                    cnt++;
                 }
-
-            }
-            // Generate combinations and add them to out
-            // Add the combination to the arraylist if it is not already there
-            // If the combination includes at least one fitter from each station
-            // or if it includes fitters from n-1, n-2, or n-3 stations, add it to the list
-            if (temp.size() >= n) {
-                out.add(temp.toString());
-            }
+                if (cnt == n) {
+                    out.add(temp.toString()); // add the combination to the output list if it is valid
+                }
 
             // Find the rightmost array that has more
             // elements left after the current element
             // in that array
             int next = n - 1;
             while (next >= 0 &&
-                    (indices[next] + 1 >= arr[next].size()))
+                    (indices[next] + 1 >= arr2[next].size()))
                 next--;
 
             // No such array is found so no more
             // combinations left
-            if (next < 0){
+            if (next < 0) {
                 // print out
+                System.out.println("----------- Möjliga kombinationer ---------");
                 for (int i = 0; i < out.size(); i++) {
                     System.out.println(out.get(i));
                 }
-                return out;}
+
+                return out;
+            }
 
             // If found move to next element in that
             // array
