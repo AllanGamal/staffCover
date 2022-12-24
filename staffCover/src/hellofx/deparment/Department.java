@@ -166,39 +166,39 @@ public class Department {
             numStations += this.getTeamList()[i].getStationList().length; // add the number of stations in each team to
                                                                           // the total
         }
-        LinkedList<String>[] arr = new LinkedList[numStations]; // create an array of linked lists for each station
-        System.out.println(numStations); // print the number of stations
+        List<String>[] arr = new LinkedList[numStations]; // create an array of linked lists for each station
 
-        for (int i = 0; i < numStations; i++) {
-            // make a new linked list for each station
-            arr[i] = new LinkedList<String>();
+for (int i = 0; i < numStations; i++) {
+    // make a new linked list for each station
+    arr[i] = new LinkedList<String>();
+}
+
+int count = 0;
+
+// print all fitters and their competencies
+for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+    for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in the team
+        System.out.println(this.getTeamList()[i].getStationList()[j] + ":"); // print the station name
+        for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in the team
+            System.out.println(this.getTeamList()[i].getFitterList()[k].getName() + " - " + Arrays.toString(this.getTeamList()[i].getFitterList()[k].getCompetency())); // print the fitter name and competency
         }
+    }
+}
 
-        int count = 0;
-
-        // loop through every fitter and add them to the linked list if the competency
-        // is matched and the fitter is available
-        for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
-            for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in
-                                                                                      // the team
-                arr[count] = new LinkedList<>(); // create a new linked list for this station
-                // arr[count].add(this.getTeamList()[i].getStationList()[j]); // add the station
-                // to the linked list
-                for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in
-                    if (this.getTeamList()[i].getFitterList()[k].getAvailability()) { // check if the fitter is
-                        for (int l = 0; l < this.getTeamList()[i].getFitterList()[k].getCompetency().length; l++) { // loop
-
-                            if (this.getTeamList()[i].getStationList()[j] == this.getTeamList()[i].getFitterList()[k]
-                                    .getCompetency()[l]) { // if the competency matches the station
-                                arr[count].add(this.getTeamList()[i].getFitterList()[k].getName()); // add the fitter's
-
-                            }
-                        }
-                    }
-                }
-                count++; // increment the count
+// loop through every fitter and add them to the linked list if the competency
+// is matched and the fitter is available
+for (Team team : this.getTeamList()) { // loop through every team
+    for (String station : team.getStationList()) { // loop through every station in the team
+        for (Fitter fitter : team.getFitterList()) { // loop through every fitter in the team
+            if (fitter.getAvailability() && Arrays.asList(fitter.getCompetency()).contains(station)) {
+                arr[count].add(fitter.getName()); // add the fitter to the linked list if the competency is matched and the fitter is available
+                                                 
             }
         }
+        count++;
+    }
+}
+
 
         // make a clone of the array
 
@@ -207,7 +207,6 @@ public class Department {
         for (int i = 0; i < arr.length; i++) {
             arr2[i] = new LinkedList<>(); // create a new LinkedList for each element in the new array
             arr2[i].addAll(arr[i]); // add all elements from the original array to the new array
-            // count the number of times null appears in the array
         }
 
         //
@@ -231,29 +230,31 @@ public class Department {
         for (int i = 0; i < n; i++)
             indices[i] = 0;
 
-            while (true) {
+        while (true) {
 
-                // For every combination, add the first element of each array to the arraylist
-                ArrayList<String> temp = new ArrayList<String>();
-                int cnt = 0;
-                for (int i = 0; i < n; i++) {
-            
-                    // if the array already contains the element, remove the list
-                    // try {
-                    try {
-                        if (temp.contains(arr2[i].get(indices[i]))) {
-                            break;
-                        }
-                        temp.add(arr2[i].get(indices[i])); //
-                    } catch (Exception e) {
-                        // if an exception occurs (e.g., index out of bounds), add "null1" to the temp list
-                        temp.add("null1");
+            // For every combination, add the first element of each array to the arraylist
+            ArrayList<String> temp = new ArrayList<String>();
+            int cnt = 0;
+            for (int i = 0; i < n; i++) {
+
+                // if the array already contains the element, remove the list
+                // try {
+                try {
+                    if (temp.contains(arr2[i].get(indices[i]))) {
+                        break;
                     }
-                    cnt++;
+                    temp.add(arr2[i].get(indices[i])); //
+                } catch (Exception e) {
+                    // if an exception occurs (e.g., index out of bounds), add "null1" to the temp
+                    // list
+                    System.out.println("Error");
+                    return null;
                 }
-                if (cnt == n) {
-                    out.add(temp.toString()); // add the combination to the output list if it is valid
-                }
+                cnt++;
+            }
+            if (cnt == n) {
+                out.add(temp.toString()); // add the combination to the output list if it is valid
+            }
 
             // Find the rightmost array that has more
             // elements left after the current element
@@ -288,5 +289,43 @@ public class Department {
 
         }
     }
+
+    public ArrayList<String> test() {
+        String fitter = "";
+        
+        ArrayList<String> out = new ArrayList<String>();
+
+        for (int i = 0; i < 3; i++) {
+            
+            // if out is empty
+                // add a fitter with all competencies
+            if (out == null && i != 0) {
+                if (i == 1) {
+                    fitter = "TOM-1";
+                } else if (i == 2) {
+                    fitter = "TOM-2";
+                } 
+
+                Fitter emptyFitter = new Fitter(this, fitter);
+
+                // add all the stations to the fitter competency list
+                for (int j = 0; j < this.getTeamList().length; j++) { // loop through every team
+                    for (int k = 0; k < this.getTeamList()[j].getStationList().length; k++) { // loop through every station in the team
+                        emptyFitter.addCompetency(this.getTeamList()[j].getStationList()[k]);
+                    }
+                }
+
+                // add the fitter to the first team
+                this.getTeamList()[0].addFitter(emptyFitter);
+            }
+
+            out = this.getCombo();
+        }
+        
+        out = this.getCombo();
+        return out;
+    }
+
+    
 
 }

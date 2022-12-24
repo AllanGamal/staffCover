@@ -776,33 +776,35 @@ public class Controller implements Initializable {
         // clear selection when selecting a new item in another listview
         // make a department object
         Department department = new Department("Department 1");
+        // make a team object
+        Team team = new Team("Team 1");
+        Team team2 = new Team("Team 2");
+        // add stations to the team
+        team.addStation(department, "Station 1");
+        team.addStation(department, "Station 2");
+        team2.addStation(department, "Station 3");
         Fitter fitter = new Fitter(department, "Kenny");
         Fitter fitter2 = new Fitter(department, "Kenny2");
         Fitter fitter3 = new Fitter(department, "Kenny3");
 
         fitter.addCompetency("Station 1");
         fitter.addCompetency("Station 2");
-        fitter2.addCompetency("Station 1");
-        fitter2.addCompetency("Station 2");
-        fitter3.addCompetency("Station 3");
+        //fitter2.addCompetency("Station 1");
+        //fitter2.addCompetency("Station 2");
+        //fitter3.addCompetency("Station 3");
 
-        // make a team object
-        Team team = new Team("Team 1");
-        Team team2 = new Team("Team 2");
+        
         // add the fitter to the team
         team.addFitter(fitter);
         team.addFitter(fitter2);
         team2.addFitter(fitter3);
 
-        // add stations to the team
-        team.addStation(department, "Station 1");
-        team.addStation(department, "Station 2");
-        team2.addStation(department, "Station 3");
+        
 
         // add the team to the department
         department.addTeam(team);
         department.addTeam(team2);
-        department.getCombo();
+        department.test();
         // department.getCombo();
         // make a fitter object
         
