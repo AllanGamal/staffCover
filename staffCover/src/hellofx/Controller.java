@@ -40,6 +40,9 @@ public class Controller implements Initializable {
     @FXML
     private ScrollPane scrollPlane;
 
+    @FXML
+    private ScrollPane compScroll;
+
     ObservableList<Fitter> list = FXCollections.observableArrayList();
 
     @Override
@@ -73,26 +76,33 @@ public class Controller implements Initializable {
     @FXML
     void magicCalc(ActionEvent event) {
         // get the name of the selected row
-/*
+
         try {
-            ArrayList arr = department.getCombo();
+            ArrayList arr = department.getMultipleCombos();
+            int arrLength = arr.size();
             // print all item in the arraylist
             for (int i = 0; i < arr.size(); i++) {
                 System.out.println(arr.get(i));
             }
 
-
-
             Scene newPopup = newPopup("fxml/magicCalc.fxml", "ComboWombo");
 
+            // add a listview to the scroll pane with the id "compScroll"
+            ListView<String> listView = new ListView<String>();
+            listView.setPrefSize(200, 200);
+            listView.setItems(FXCollections.observableArrayList(arr));
+            listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+            // make a node with the id "compScroll" and add the listview to it
+            Node node = newPopup.lookup("#compScroll");
+            ((ScrollPane) node).setContent(listView);
             
-            MagicCalc.addSolution(newPopup, "#vbox1");
 
         } catch (IOException e2) {
             // TODO Auto-generated catch block
             System.out.println("Funkar ej");
         }
-         */
+         
 
     }
 
@@ -771,45 +781,47 @@ public class Controller implements Initializable {
     public static Department getDepartment() {
         return department;
     }
-
-    public static void main(String[] args) {
-        // clear selection when selecting a new item in another listview
-        // make a department object
-        Department department = new Department("Department 1");
-        // make a team object
-        Team team = new Team("Team 1");
-        Team team2 = new Team("Team 2");
-        // add stations to the team
-        team.addStation(department, "Station 1");
-        team.addStation(department, "Station 2");
-        team2.addStation(department, "Station 3");
-        Fitter fitter = new Fitter(department, "Kenny");
-        Fitter fitter2 = new Fitter(department, "Kenny2");
-        Fitter fitter3 = new Fitter(department, "Kenny3");
-
-        fitter.addCompetency("Station 1");
-        fitter.addCompetency("Station 2");
-        fitter2.addCompetency("Station 1");
-        fitter2.addCompetency("Station 2");
-        //fitter3.addCompetency("Station 3");
-
-        
-        // add the fitter to the team
-        team.addFitter(fitter);
-        team.addFitter(fitter2);
-        team2.addFitter(fitter3);
-
-        
-
-        // add the team to the department
-        department.addTeam(team);
-        department.addTeam(team2);
-        department.getMultipleCombos();
-        // department.getCombo();
-        // make a fitter object
-        
-    }
-
+/*
+ 
+public static void main(String[] args) {
+    // clear selection when selecting a new item in another listview
+    // make a department object
+    Department department = new Department("Department 1");
+    // make a team object
+    Team team = new Team("Team 1");
+    Team team2 = new Team("Team 2");
+    // add stations to the team
+    team.addStation(department, "Station 1");
+    team.addStation(department, "Station 2");
+    team2.addStation(department, "Station 3");
+    Fitter fitter = new Fitter(department, "Kenny");
+    Fitter fitter2 = new Fitter(department, "Kenny2");
+    Fitter fitter3 = new Fitter(department, "Kenny3");
     
+    fitter.addCompetency("Station 1");
+    fitter.addCompetency("Station 2");
+    fitter2.addCompetency("Station 1");
+    fitter2.addCompetency("Station 2");
+    //fitter3.addCompetency("Station 3");
+    
+    
+    // add the fitter to the team
+    team.addFitter(fitter);
+    team.addFitter(fitter2);
+    team2.addFitter(fitter3);
+    
+    
+    
+    // add the team to the department
+    department.addTeam(team);
+    department.addTeam(team2);
+    department.getMultipleCombos();
+    // department.getCombo();
+    // make a fitter object
+    
+}
+
+*/
+
 
 }
