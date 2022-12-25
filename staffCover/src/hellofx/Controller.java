@@ -791,7 +791,7 @@ public class Controller implements Initializable {
         fitter.addCompetency("Station 2");
         fitter2.addCompetency("Station 1");
         fitter2.addCompetency("Station 2");
-        fitter3.addCompetency("Station 3");
+        //fitter3.addCompetency("Station 3");
 
         
         // add the fitter to the team
@@ -804,7 +804,7 @@ public class Controller implements Initializable {
         // add the team to the department
         department.addTeam(team);
         department.addTeam(team2);
-        department.test();
+        department.getMultipleCombos();
         // department.getCombo();
         // make a fitter object
         

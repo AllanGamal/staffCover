@@ -175,7 +175,7 @@ for (int i = 0; i < numStations; i++) {
 
 int count = 0;
 
-System.out.println("--------------------");
+
 
 // add all fitters to the array of linked lists
 for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
@@ -190,11 +190,6 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
         count++; // increment the counter for the next station
     }
 }
-
-System.out.println("--------------------");
-
-
-
 
 
         // make a clone of the array
@@ -287,12 +282,12 @@ System.out.println("--------------------");
         }
     }
 
-    public ArrayList<String> test() {
+    public ArrayList<String> getMultipleCombos() {
         String fitter = "";
         
         ArrayList<String> out = new ArrayList<String>();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             
             // if out is empty
                 // add a fitter with all competencies
@@ -303,6 +298,10 @@ System.out.println("--------------------");
                     fitter = "TOM-2";
                 } else if (i == 3) {
                     fitter = "TOM-3";
+                } else if (i == 4) {
+                    fitter = "TOM-4";
+                } else if (i == 5) {
+                    fitter = "TOM-5";
                 }
 
                 Fitter emptyFitter = new Fitter(this, fitter);
@@ -321,10 +320,18 @@ System.out.println("--------------------");
             out = this.getCombo();
         }
         
-        out = this.getCombo();
+        removeTomFitters();
         return out;
     }
 
-    
+    public void removeTomFitters() {
+        for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+            for (int j = 0; j < this.getTeamList()[i].getFitterList().length; j++) { // loop through every fitter in the team
+                if (this.getTeamList()[i].getFitterList()[j].getName().contains("TOM-")) { // if the fitter is a tom fitter
+                    this.getTeamList()[i].removeFitter(this.getTeamList()[i].getFitterList()[j]); // remove the fitter
+                }
+            }
+        }
+    }
 
 }
