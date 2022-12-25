@@ -110,6 +110,15 @@ public class Fitter  {
         this.availability = !this.availability;
     }
 
+    public boolean gotCompetency(String competency) {
+        for (int i = 0; i < this.competency.size(); i++) {
+            if (this.competency.get(i) == competency) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
     

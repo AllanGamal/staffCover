@@ -175,29 +175,26 @@ for (int i = 0; i < numStations; i++) {
 
 int count = 0;
 
-// print all fitters and their competencies
+System.out.println("--------------------");
+
+// add all fitters to the array of linked lists
 for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
     for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in the team
-        System.out.println(this.getTeamList()[i].getStationList()[j] + ":"); // print the station name
-        for (int k = 0; k < this.getTeamList()[i].getFitterList().length; k++) { // loop through every fitter in the team
-            System.out.println(this.getTeamList()[i].getFitterList()[k].getName() + " - " + Arrays.toString(this.getTeamList()[i].getFitterList()[k].getCompetency())); // print the fitter name and competency
+        for (int x = 0; x < this.getTeamList().length; x++) { // loop through every team
+            for (int y = 0; y < this.getTeamList()[x].getFitterList().length; y++) { // loop through every fitter in the team
+                if (this.getTeamList()[x].getFitterList()[y].getAvailability() && this.getTeamList()[x].getFitterList()[y].gotCompetency(this.getTeamList()[i].getStationList()[j])) { // if the fitter is available and has the competency
+                    arr[count].add(this.getTeamList()[x].getFitterList()[y].getName()); // add the fitter to the linked list
+                }
+            }
         }
+        count++; // increment the counter for the next station
     }
 }
 
-// loop through every fitter and add them to the linked list if the competency
-// is matched and the fitter is available
-for (Team team : this.getTeamList()) { // loop through every team
-    for (String station : team.getStationList()) { // loop through every station in the team
-        for (Fitter fitter : team.getFitterList()) { // loop through every fitter in the team
-            if (fitter.getAvailability() && Arrays.asList(fitter.getCompetency()).contains(station)) {
-                arr[count].add(fitter.getName()); // add the fitter to the linked list if the competency is matched and the fitter is available
-                                                 
-            }
-        }
-        count++;
-    }
-}
+System.out.println("--------------------");
+
+
+
 
 
         // make a clone of the array
@@ -299,12 +296,14 @@ for (Team team : this.getTeamList()) { // loop through every team
             
             // if out is empty
                 // add a fitter with all competencies
-            if (out == null && i != 0) {
+            if (out == null || out.size() == 0 && i != 0) {
                 if (i == 1) {
                     fitter = "TOM-1";
                 } else if (i == 2) {
                     fitter = "TOM-2";
-                } 
+                } else if (i == 3) {
+                    fitter = "TOM-3";
+                }
 
                 Fitter emptyFitter = new Fitter(this, fitter);
 

@@ -789,9 +789,9 @@ public class Controller implements Initializable {
 
         fitter.addCompetency("Station 1");
         fitter.addCompetency("Station 2");
-        //fitter2.addCompetency("Station 1");
-        //fitter2.addCompetency("Station 2");
-        //fitter3.addCompetency("Station 3");
+        fitter2.addCompetency("Station 1");
+        fitter2.addCompetency("Station 2");
+        fitter3.addCompetency("Station 3");
 
         
         // add the fitter to the team
