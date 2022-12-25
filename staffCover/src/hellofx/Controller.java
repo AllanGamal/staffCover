@@ -1,6 +1,10 @@
 package hellofx;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.*;
 import hellofx.deparment.*;
@@ -14,6 +18,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import hellofx.popups.MagicCalc;
 
@@ -50,6 +56,7 @@ public class Controller implements Initializable {
 
         // TODO Auto-generated method stub
         department = new Department("Johan");
+        
         fitterTable.setItems(list);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         idCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
@@ -78,25 +85,116 @@ public class Controller implements Initializable {
         // get the name of the selected row
 
         try {
-            ArrayList arr = department.getMultipleCombos();
-            int arrLength = arr.size();
-            // print all item in the arraylist
-            for (int i = 0; i < arr.size(); i++) {
-                System.out.println(arr.get(i));
-            }
+            // clear selection when selecting a new item in another listview
+    // make a department object
+    Department department = new Department("Department 1");
+    // make a team object
+    Team team = new Team("Team 1");
+    Team team2 = new Team("Team 2");
+    Team team3 = new Team("Team 3");
+    // add stations to the team
+    team.addStation(department, "Station 1");
+    team.addStation(department, "Station 2");
+    team2.addStation(department, "Station 3");
+    team2.addStation(department, "Station 4");
+    team3.addStation(department, "Station 5");
+    team3.addStation(department, "Station 6");
+
+    Fitter fitter = new Fitter(department, "Kenny");
+    Fitter fitter2 = new Fitter(department, "Kenny2");
+    Fitter fitter3 = new Fitter(department, "Kenny3");
+    Fitter fitter4 = new Fitter(department, "Kenny4");
+    
+    
+    fitter.addCompetency("Station 1");
+    fitter.addCompetency("Station 2");
+    fitter2.addCompetency("Station 1");
+    fitter2.addCompetency("Station 2");
+    fitter3.addCompetency("Station 3");
+    fitter3.addCompetency("Station 4");
+    fitter4.addCompetency("Station 5");
+    fitter4.addCompetency("Station 6");
+    fitter4.addCompetency("Station 1");
+    fitter4.addCompetency("Station 2");
+    fitter4.addCompetency("Station 3");
+    fitter4.addCompetency("Station 4");
+    
+
+    
+    
+    
+    // add the fitter to the team
+    team.addFitter(fitter);
+    team.addFitter(fitter2);
+    team2.addFitter(fitter3);
+    team3.addFitter(fitter4);
+    
+    
+    
+    // add the team to the department
+    department.addTeam(team);
+    department.addTeam(team2);
+    department.addTeam(team3);
+    department.getMultipleCombos();
+    // department.getCombo();
+    // make a fitter object
+    ArrayList<ArrayList<String>> arr = department.getMultipleCombos();
+        
+            
 
             Scene newPopup = newPopup("fxml/magicCalc.fxml", "ComboWombo");
-
-            // add a listview to the scroll pane with the id "compScroll"
-            ListView<String> listView = new ListView<String>();
-            listView.setPrefSize(200, 200);
-            listView.setItems(FXCollections.observableArrayList(arr));
-            listView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            
 
             // make a node with the id "compScroll" and add the listview to it
             Node node = newPopup.lookup("#compScroll");
-            ((ScrollPane) node).setContent(listView);
+
+             // create an HBox to hold the ListView objects
+             HBox hBox = new HBox();
+
+             // add 10 listviews next to each other in the HBox
+             // add 10 listviews next to each other in the HBox
+             for (int i = 0; i < arr.size(); i++) {
+                // constrain the number of listviews to 10
+                if (i > 10) {
+                    // create a new listview
+                    break;
+                }
+                 ListView<String> listView2 = new ListView<String>();
+                 listView2.setPrefSize(200, 500);
+                 // extract the items from the LinkedList and add them to the listview
+                 listView2.setCellFactory(lv -> new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(item);
+                        if (item != null && item.startsWith("TOM-")) {
+                            setTextFill(Color.RED);
+                        } else {
+                            setTextFill(Color.BLACK);
+                        }
+                    }
+                });
+                 
+                 ObservableList<String> items = FXCollections.observableArrayList();
+                 for (int j = 0; j < arr.get(i).size(); j++) {
+                    
+                     items.add(arr.get(i).get(j));
+                 }
+                 listView2.setItems(items);
+                 listView2.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                 hBox.getChildren().add(listView2);
+                 
+
+                 // add the ListView to the HBox
+             }
+
+            // add the HBox to the ScrollPane
+            ((ScrollPane) node).setContent(hBox);
+
             
+ 
+
+
 
         } catch (IOException e2) {
             // TODO Auto-generated catch block
@@ -132,6 +230,10 @@ public class Controller implements Initializable {
                 }
 
             }
+            // om avbryt klickas, avbryt
+            if (dialog.getEditor().getText().equals("Team name")) {
+                return;
+            }
 
             // if there is spacing in the team name, show an alert
             if (dialog.getEditor().getText().contains(" ")) {
@@ -142,7 +244,7 @@ public class Controller implements Initializable {
                 alert.showAndWait();
                 // stop the method
                 return;
-            }
+            } 
 
             Team team = new Team(dialog.getEditor().getText());
             department.addTeam(team);
@@ -234,6 +336,7 @@ public class Controller implements Initializable {
             btnbox.getChildren().addAll(btnbox1, btnbox2);
             bp.setBottom(btnbox);
 
+            
             // btn action to add a station
             button.setOnMouseClicked(e -> {
                 TextInputDialog dialog2 = new TextInputDialog("Station name");
@@ -341,12 +444,30 @@ public class Controller implements Initializable {
                 dialog2.setContentText("Vänligen ange montörens namn:");
                 dialog2.showAndWait();
 
+                // om avbryt klickas, avbryt
+                if (dialog2.getEditor().getText().equals("Montörens namn")) {
+                    return;
+                }
+
+                if (dialog2.getEditor().getText().toUpperCase().contains("TOM-")) {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Felaktigt namn");
+                    alert.setContentText("Montörens namn får inte innehålla 'TOM-', vänligen välj ett annat namn");
+                    alert.showAndWait();
+                    // stop the method
+                    return;
+                    
+                }
+                
+
                 String id = button3.getId();
                 // remove the "-addfitter" from the id
                 id = id.substring(0, id.length() - 10);
 
                 // check if the fitter already exists in any team
                 for (int i = 0; i < department.getTeamList().length; i++) {
+                    
                     for (int j = 0; j < department.getTeamList()[i].getFitterList().length; j++) {
                         if (department.getTeamList()[i].getFitterList()[j].getName()
                                 .equals(dialog2.getEditor().getText())) {
@@ -729,6 +850,7 @@ public class Controller implements Initializable {
         // set title
         primaryStage.setTitle(name);
         primaryStage.setScene(scene);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
         primaryStage.show();
 
         return scene;
@@ -822,6 +944,7 @@ public static void main(String[] args) {
 }
 
 */
+
 
 
 }

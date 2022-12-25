@@ -158,7 +158,7 @@ public class Department {
      * 
      * @return teamList - the team list
      */
-    public ArrayList<String> getCombo() {
+    public ArrayList<ArrayList<String>> getCombo() {
 
         // get the number of stations in the department
         int numStations = 0; // number of stations in the department
@@ -202,17 +202,19 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
         }
 
         //
-
+        
+        /*  
         System.out.println("--------- Stationer matchade med fitters ---------");
         // print the array
         for (int i = 0; i < arr2.length; i++) {
             System.out.println(arr2[i]);
         }
+        */
 
         // Number of arrays
         int n = arr2.length;
 
-        ArrayList<String> out = new ArrayList<String>();
+        ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
 
         // To keep track of next element in
         // each of the n arrays
@@ -245,7 +247,8 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
                 cnt++;
             }
             if (cnt == n) {
-                out.add(temp.toString()); // add the combination to the output list if it is valid
+                 // add the combination to the output list if it is valid
+                out.add(temp);
             }
 
             // Find the rightmost array that has more
@@ -259,11 +262,13 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
             // No such array is found so no more
             // combinations left
             if (next < 0) {
+                /*                
                 // print out
                 System.out.println("----------- Möjliga kombinationer ---------");
                 for (int i = 0; i < out.size(); i++) {
                     System.out.println(out.get(i));
                 }
+                */
 
                 return out;
             }
@@ -282,10 +287,10 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
         }
     }
 
-    public ArrayList<String> getMultipleCombos() {
+    public ArrayList<ArrayList<String>> getMultipleCombos() {
         String fitter = "";
         
-        ArrayList<String> out = new ArrayList<String>();
+        ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
 
         for (int i = 0; i < 6; i++) {
             
@@ -310,6 +315,7 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
                 for (int j = 0; j < this.getTeamList().length; j++) { // loop through every team
                     for (int k = 0; k < this.getTeamList()[j].getStationList().length; k++) { // loop through every station in the team
                         emptyFitter.addCompetency(this.getTeamList()[j].getStationList()[k]);
+                        
                     }
                 }
 
@@ -319,7 +325,19 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
 
             out = this.getCombo();
         }
-        
+        int count = 0;
+       
+        // add " --- " + station name to the end of each fitter
+        for (int i = 0; i < this.getTeamList().length; i++) {
+            for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) {
+                String stationName = this.getTeamList()[i].getStationList()[j];
+                for (int k = 0; k < out.size(); k++) {
+                    out.get(k).set(count, out.get(k).get(count) + " --- " + stationName);
+                }
+                count++;
+            }
+        }
+
         removeTomFitters();
         return out;
     }

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main_1",
+            "request": "launch",
+            "mainClass": "hellofx.Main_1",
+            "projectName": "staffCover_7591c643"
+        },
+        {
+            "type": "java",
             "name": "Launch Department",
             "request": "launch",
             "mainClass": "hellofx.deparment.Department",
