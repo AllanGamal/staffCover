@@ -168,29 +168,34 @@ public class Department {
         }
         List<String>[] arr = new LinkedList[numStations]; // create an array of linked lists for each station
 
-for (int i = 0; i < numStations; i++) {
-    // make a new linked list for each station
-    arr[i] = new LinkedList<String>();
-}
+        for (int i = 0; i < numStations; i++) {
+            // make a new linked list for each station
+            arr[i] = new LinkedList<String>();
+        }
 
-int count = 0;
+        int count = 0;
 
-
-
-// add all fitters to the array of linked lists
-for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
-    for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in the team
-        for (int x = 0; x < this.getTeamList().length; x++) { // loop through every team
-            for (int y = 0; y < this.getTeamList()[x].getFitterList().length; y++) { // loop through every fitter in the team
-                if (this.getTeamList()[x].getFitterList()[y].getAvailability() && this.getTeamList()[x].getFitterList()[y].gotCompetency(this.getTeamList()[i].getStationList()[j])) { // if the fitter is available and has the competency
-                    arr[count].add(this.getTeamList()[x].getFitterList()[y].getName()); // add the fitter to the linked list
+        // add all fitters to the array of linked lists
+        for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
+            for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) { // loop through every station in
+                                                                                      // the team
+                for (int x = 0; x < this.getTeamList().length; x++) { // loop through every team
+                    for (int y = 0; y < this.getTeamList()[x].getFitterList().length; y++) { // loop through every
+                                                                                             // fitter in the team
+                        if (this.getTeamList()[x].getFitterList()[y].getAvailability()
+                                && this.getTeamList()[x].getFitterList()[y]
+                                        .gotCompetency(this.getTeamList()[i].getStationList()[j])) { // if the fitter is
+                                                                                                     // available and
+                                                                                                     // has the
+                                                                                                     // competency
+                            arr[count].add(this.getTeamList()[x].getFitterList()[y].getName()); // add the fitter to the
+                                                                                                // linked list
+                        }
+                    }
                 }
+                count++; // increment the counter for the next station
             }
         }
-        count++; // increment the counter for the next station
-    }
-}
-
 
         // make a clone of the array
 
@@ -202,14 +207,14 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
         }
 
         //
-        
-        /*  
-        System.out.println("--------- Stationer matchade med fitters ---------");
-        // print the array
-        for (int i = 0; i < arr2.length; i++) {
-            System.out.println(arr2[i]);
-        }
-        */
+
+        /*
+         * System.out.println("--------- Stationer matchade med fitters ---------");
+         * // print the array
+         * for (int i = 0; i < arr2.length; i++) {
+         * System.out.println(arr2[i]);
+         * }
+         */
 
         // Number of arrays
         int n = arr2.length;
@@ -247,7 +252,7 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
                 cnt++;
             }
             if (cnt == n) {
-                 // add the combination to the output list if it is valid
+                // add the combination to the output list if it is valid
                 out.add(temp);
             }
 
@@ -262,13 +267,13 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
             // No such array is found so no more
             // combinations left
             if (next < 0) {
-                /*                
-                // print out
-                System.out.println("----------- Möjliga kombinationer ---------");
-                for (int i = 0; i < out.size(); i++) {
-                    System.out.println(out.get(i));
-                }
-                */
+                /*
+                 * // print out
+                 * System.out.println("----------- Möjliga kombinationer ---------");
+                 * for (int i = 0; i < out.size(); i++) {
+                 * System.out.println(out.get(i));
+                 * }
+                 */
 
                 return out;
             }
@@ -289,13 +294,13 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
 
     public ArrayList<ArrayList<String>> getMultipleCombos() {
         String fitter = "";
-        
+
         ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
 
-        for (int i = 0; i < 6; i++) {
-            
+        for (int i = 0; i < 2; i++) {
+
             // if out is empty
-                // add a fitter with all competencies
+            // add a fitter with all competencies
             if (out == null || out.size() == 0 && i != 0) {
                 if (i == 1) {
                     fitter = "TOM-1";
@@ -313,9 +318,10 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
 
                 // add all the stations to the fitter competency list
                 for (int j = 0; j < this.getTeamList().length; j++) { // loop through every team
-                    for (int k = 0; k < this.getTeamList()[j].getStationList().length; k++) { // loop through every station in the team
+                    for (int k = 0; k < this.getTeamList()[j].getStationList().length; k++) { // loop through every
+                                                                                              // station in the team
                         emptyFitter.addCompetency(this.getTeamList()[j].getStationList()[k]);
-                        
+
                     }
                 }
 
@@ -326,7 +332,7 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
             out = this.getCombo();
         }
         int count = 0;
-       
+
         // add " --- " + station name to the end of each fitter
         for (int i = 0; i < this.getTeamList().length; i++) {
             for (int j = 0; j < this.getTeamList()[i].getStationList().length; j++) {
@@ -344,8 +350,10 @@ for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
 
     public void removeTomFitters() {
         for (int i = 0; i < this.getTeamList().length; i++) { // loop through every team
-            for (int j = 0; j < this.getTeamList()[i].getFitterList().length; j++) { // loop through every fitter in the team
-                if (this.getTeamList()[i].getFitterList()[j].getName().contains("TOM-")) { // if the fitter is a tom fitter
+            for (int j = 0; j < this.getTeamList()[i].getFitterList().length; j++) { // loop through every fitter in the
+                                                                                     // team
+                if (this.getTeamList()[i].getFitterList()[j].getName().contains("TOM-")) { // if the fitter is a tom
+                                                                                           // fitter
                     this.getTeamList()[i].removeFitter(this.getTeamList()[i].getFitterList()[j]); // remove the fitter
                 }
             }

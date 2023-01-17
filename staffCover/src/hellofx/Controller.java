@@ -59,42 +59,141 @@ public class Controller implements Initializable {
         Team team = new Team("Team1");
         Team team2 = new Team("Team2");
         Team team3 = new Team("Team3");
+        Team team4 = new Team("Team4");
         // add stations to the team
-        team.addStation(department, "Station 1");
-        team.addStation(department, "Station 2");
-        team2.addStation(department, "Station 3");
-        team2.addStation(department, "Station 4");
-        team3.addStation(department, "Station 5");
-        team3.addStation(department, "Station 6");
+        team.addStation(department, "Station1");
+        team.addStation(department, "Station2");
+        team.addStation(department, "Station3");
+        team2.addStation(department, "Station4");
+        team2.addStation(department, "Station5");
+        team2.addStation(department, "Station6");
+        team3.addStation(department, "Station7");
+        team3.addStation(department, "Station8");
+        team3.addStation(department, "Station9");
+        team4.addStation(department, "Station10");
+        team4.addStation(department, "Station11");
+        team4.addStation(department, "Station12");
+        team.addStation(department, "Station13");
+        team.addStation(department, "Station14");
+        team.addStation(department, "Station15");
+        team2.addStation(department, "Station16");
+        team2.addStation(department, "Station17");
+        team2.addStation(department, "Station18");
+        team3.addStation(department, "Station19");
+        team3.addStation(department, "Station20");
+        team3.addStation(department, "Station21");
+        
+       
+        Fitter fitter1 = new Fitter(department, "Kenny");
+Fitter fitter2 = new Fitter(department, "Johan");
+Fitter fitter3 = new Fitter(department, "Daniel");
+Fitter fitter4 = new Fitter(department, "Sanna");
+Fitter fitter5 = new Fitter(department, "Isak");
+Fitter fitter6 = new Fitter(department, "Ragnar");
+Fitter fitter7 = new Fitter(department, "Björn");
+Fitter fitter8 = new Fitter(department, "Lars");
+Fitter fitter9 = new Fitter(department, "Leif");
+Fitter fitter10 = new Fitter(department, "Gunnar");
+Fitter fitter11 = new Fitter(department, "Erik");
+Fitter fitter12 = new Fitter(department, "Anna");
+Fitter fitter13 = new Fitter(department, "Lena");
+Fitter fitter14 = new Fitter(department, "Mikael");
+Fitter fitter15 = new Fitter(department, "Ingrid");
+Fitter fitter16 = new Fitter(department, "Anders");
+Fitter fitter17 = new Fitter(department, "Emma");
+Fitter fitter18 = new Fitter(department, "Maria");
+Fitter fitter19 = new Fitter(department, "Johanna");
+Fitter fitter20 = new Fitter(department, "Linus");
+Fitter fitter21 = new Fitter(department, "Lina");
+Fitter fitter22 = new Fitter(department, "Pia");
+        
 
-        Fitter fitter = new Fitter(department, "Kenny");
-        Fitter fitter2 = new Fitter(department, "Kenny2");
-        Fitter fitter3 = new Fitter(department, "Kenny3");
-        Fitter fitter4 = new Fitter(department, "Kenny4");
+        fitter1.addCompetency("Station1");
+        fitter1.addCompetency("Station2");
+        fitter2.addCompetency("Station3");
+        fitter2.addCompetency("Station4");
+        fitter3.addCompetency("Station5");
+        fitter3.addCompetency("Station6");
+        fitter4.addCompetency("Station7");
+        fitter4.addCompetency("Station8");
+        fitter5.addCompetency("Station1");
+        fitter5.addCompetency("Station2");
+        fitter6.addCompetency("Station3");
+        fitter6.addCompetency("Station4");
+        fitter7.addCompetency("Station5");
+        fitter7.addCompetency("Station6");
+        fitter8.addCompetency("Station7");
+        fitter8.addCompetency("Station8");
+        fitter9.addCompetency("Station9");
+        fitter9.addCompetency("Station10");
+        fitter10.addCompetency("Station11");
+        fitter10.addCompetency("Station12");
+        fitter11.addCompetency("Station9");
+        fitter11.addCompetency("Station10");
+        fitter12.addCompetency("Station11");
+        fitter12.addCompetency("Station12");
+        fitter13.addCompetency("Station1");
+        fitter13.addCompetency("Station2");
+        fitter14.addCompetency("Station3");
+        fitter14.addCompetency("Station4");
+        fitter15.addCompetency("Station5");
+        fitter15.addCompetency("Station6");
+        fitter16.addCompetency("Station7");
+        fitter16.addCompetency("Station8");
+        fitter17.addCompetency("Station9");
+        fitter17.addCompetency("Station10");
+        fitter18.addCompetency("Station11");
+        fitter18.addCompetency("Station12");
+        fitter19.addCompetency("Station13");
+        fitter19.addCompetency("Station14");
+        fitter20.addCompetency("Station15");
+        fitter20.addCompetency("Station16");
+        fitter21.addCompetency("Station17");
+        fitter21.addCompetency("Station18");
+        fitter22.addCompetency("Station19");
+        fitter22.addCompetency("Station20");
+        fitter4.addCompetency("Station21");
 
-        fitter.addCompetency("Station 1");
-        fitter.addCompetency("Station 2");
-        fitter2.addCompetency("Station 1");
-        fitter2.addCompetency("Station 2");
-        fitter3.addCompetency("Station 3");
-        fitter3.addCompetency("Station 4");
-        fitter4.addCompetency("Station 5");
-        fitter4.addCompetency("Station 6");
-        fitter4.addCompetency("Station 1");
-        fitter4.addCompetency("Station 2");
-        fitter4.addCompetency("Station 3");
-        fitter4.addCompetency("Station 4");
+   
+
+        
+        
+        
+       
+
 
         // add the fitter to the team
-        team.addFitter(fitter);
+        team.addFitter(fitter1);
         team.addFitter(fitter2);
         team2.addFitter(fitter3);
-        team3.addFitter(fitter4);
+        team2.addFitter(fitter4);
+        team3.addFitter(fitter5);
+        team3.addFitter(fitter6);
+        team4.addFitter(fitter7);
+        team4.addFitter(fitter8);
+        team.addFitter(fitter9);
+        team.addFitter(fitter10);
+        team2.addFitter(fitter11);
+        team2.addFitter(fitter12);
+        team3.addFitter(fitter13);
+        team3.addFitter(fitter14);
+        team4.addFitter(fitter15);
+        team4.addFitter(fitter16);
+        team.addFitter(fitter17);
+        team.addFitter(fitter18);
+        team2.addFitter(fitter19);
+        team2.addFitter(fitter20);
+        team3.addFitter(fitter21);
+        team3.addFitter(fitter22);
+        
+        
+
 
         // add the team to the department
         department.addTeam(team);
         department.addTeam(team2);
         department.addTeam(team3);
+        department.addTeam(team4);
         addNameToTable();
         
 
@@ -153,7 +252,7 @@ public class Controller implements Initializable {
             // add 10 listviews next to each other in the HBox
             for (int i = 0; i < arr.size(); i++) {
                 // constrain the number of listviews to 10
-                if (i > 10) {
+                if (i > 2) {
                     // create a new listview
                     break;
                 }
