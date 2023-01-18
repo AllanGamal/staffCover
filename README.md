@@ -83,7 +83,7 @@ Check if understaffed
   </p>
 
  <p>
-   Hopfully the value I gainged of this failed application is that I (hopfully) can identify an NP-problem before trying to solve it. 
+   Hopfully the value I gained of this failed application is that I (hopfully) can identify an NP-problem before trying to solve it. 
   </p>
  
 
