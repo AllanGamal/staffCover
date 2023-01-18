@@ -1,10 +1,6 @@
 package hellofx;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.*;
 import hellofx.deparment.*;
@@ -21,7 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import hellofx.popups.MagicCalc;
+
 
 // implements Initializable and add initialize method
 public class Controller implements Initializable {
@@ -73,15 +69,7 @@ public class Controller implements Initializable {
         team4.addStation(department, "Station10");
         team4.addStation(department, "Station11");
         team4.addStation(department, "Station12");
-        team.addStation(department, "Station13");
-        team.addStation(department, "Station14");
-        team.addStation(department, "Station15");
-        team2.addStation(department, "Station16");
-        team2.addStation(department, "Station17");
-        team2.addStation(department, "Station18");
-        team3.addStation(department, "Station19");
-        team3.addStation(department, "Station20");
-        team3.addStation(department, "Station21");
+       
         
        
         Fitter fitter1 = new Fitter(department, "Kenny");
@@ -97,28 +85,16 @@ Fitter fitter10 = new Fitter(department, "Gunnar");
 Fitter fitter11 = new Fitter(department, "Erik");
 Fitter fitter12 = new Fitter(department, "Anna");
 Fitter fitter13 = new Fitter(department, "Lena");
-Fitter fitter14 = new Fitter(department, "Mikael");
-Fitter fitter15 = new Fitter(department, "Ingrid");
-Fitter fitter16 = new Fitter(department, "Anders");
-Fitter fitter17 = new Fitter(department, "Emma");
-Fitter fitter18 = new Fitter(department, "Maria");
-Fitter fitter19 = new Fitter(department, "Johanna");
-Fitter fitter20 = new Fitter(department, "Linus");
-Fitter fitter21 = new Fitter(department, "Lina");
-Fitter fitter22 = new Fitter(department, "Pia");
+
         
 
         fitter1.addCompetency("Station1");
         fitter1.addCompetency("Station2");
         fitter2.addCompetency("Station3");
         fitter2.addCompetency("Station4");
-        fitter3.addCompetency("Station5");
-        fitter3.addCompetency("Station6");
         fitter4.addCompetency("Station7");
         fitter4.addCompetency("Station8");
         fitter5.addCompetency("Station1");
-        fitter5.addCompetency("Station2");
-        fitter6.addCompetency("Station3");
         fitter6.addCompetency("Station4");
         fitter7.addCompetency("Station5");
         fitter7.addCompetency("Station6");
@@ -127,39 +103,10 @@ Fitter fitter22 = new Fitter(department, "Pia");
         fitter9.addCompetency("Station9");
         fitter9.addCompetency("Station10");
         fitter10.addCompetency("Station11");
-        fitter10.addCompetency("Station12");
-        fitter11.addCompetency("Station9");
-        fitter11.addCompetency("Station10");
-        fitter12.addCompetency("Station11");
         fitter12.addCompetency("Station12");
         fitter13.addCompetency("Station1");
-        fitter13.addCompetency("Station2");
-        fitter14.addCompetency("Station3");
-        fitter14.addCompetency("Station4");
-        fitter15.addCompetency("Station5");
-        fitter15.addCompetency("Station6");
-        fitter16.addCompetency("Station7");
-        fitter16.addCompetency("Station8");
-        fitter17.addCompetency("Station9");
-        fitter17.addCompetency("Station10");
-        fitter18.addCompetency("Station11");
-        fitter18.addCompetency("Station12");
-        fitter19.addCompetency("Station13");
-        fitter19.addCompetency("Station14");
-        fitter20.addCompetency("Station15");
-        fitter20.addCompetency("Station16");
-        fitter21.addCompetency("Station17");
-        fitter21.addCompetency("Station18");
-        fitter22.addCompetency("Station19");
-        fitter22.addCompetency("Station20");
-        fitter4.addCompetency("Station21");
-
-   
-
+      
         
-        
-        
-       
 
 
         // add the fitter to the team
@@ -176,15 +123,7 @@ Fitter fitter22 = new Fitter(department, "Pia");
         team2.addFitter(fitter11);
         team2.addFitter(fitter12);
         team3.addFitter(fitter13);
-        team3.addFitter(fitter14);
-        team4.addFitter(fitter15);
-        team4.addFitter(fitter16);
-        team.addFitter(fitter17);
-        team.addFitter(fitter18);
-        team2.addFitter(fitter19);
-        team2.addFitter(fitter20);
-        team3.addFitter(fitter21);
-        team3.addFitter(fitter22);
+     
         
         
 
@@ -252,7 +191,7 @@ Fitter fitter22 = new Fitter(department, "Pia");
             // add 10 listviews next to each other in the HBox
             for (int i = 0; i < arr.size(); i++) {
                 // constrain the number of listviews to 10
-                if (i > 2) {
+                if (i > 10) {
                     // create a new listview
                     break;
                 }

@@ -297,7 +297,7 @@ public class Department {
 
         ArrayList<ArrayList<String>> out = new ArrayList<ArrayList<String>>();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 6; i++) {
 
             // if out is empty
             // add a fitter with all competencies
