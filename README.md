@@ -79,8 +79,7 @@ Check if understaffed
 <h4>The application is garbage with any larger sets</h4>
 <img src="/images/np.png" >
  <p>
-   I've tried my algorithmen to calculate every possible combinations of fitters covering stations, and it worked flawless. But I only tried it with relative small data sets (the idea was to have a data set at leat 5x). When increasing the data set with about 30%, the calculation will slow down significally. Consider this: You want to calculate the shortest path between a number of destinations, and you will have to calculate every possible outcomes first, but for every new destination you introduce, you will introduce a great number of complexity in the system and it will be compounding for every element you introduce, making the calculation exponentially harder/longer to solve for every new introduction to the data set. 
-This makes the problem an NP-complete (such problems are not believed to be efficiently solvable for large sets of data).
+   I've tried my algorithmen to calculate every possible combinations of fitters covering stations, and it worked flawlessly. But I only tried it with relative small data sets (the idea was to have a data set at leat 5x). When increasing the data set with about 30%, the calculation will slow down significally. Consider this: You want to calculate the shortest path between a number of destinations, and you will have to calculate every possible outcome first. However, for every new destination you introduce, you will increase the complexity of the system, compounding with every new element, making the calculation exponentially harder and longer to solve. This makes the problem NP-complete, meaning that such problems are not believed to be efficiently solvable for large sets of data.
   </p>
 
  <p>
