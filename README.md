@@ -63,4 +63,28 @@ Check if understaffed
   
   --------
    
+      
+   <h3>I asked for the application to tackle an NP-problem (application failed, I am an idiot)</h3>
    
+  <p>
+  I am pretty much done with the application. I made so when pressing a button, it will give you up to 10 possible combinations of "line-up" of fitters to stations. If there is there is missing two fitters to be able to cover every station, it will introduce fitters "TOM-1" and "TOM-2" and try every combination with with them lik the picture below. It will work with up to 6 introductions of "TOM-x". So it will be possible for the application to cover every station if up to 6 stations cannot be covered. 
+  </p>
+  
+<h4>Possible combinations of stations covored with full cover</h4> 
+<img src="/images/calc1.png" >
+
+<h4>Possible combinations of stations covored with 2 fitters missing</h4> 
+<img src="/images/calc2.png" >
+  
+<h4>The application is garbage with any larger sets</h4>
+<img src="/images/np.png" >
+ <p>
+   I've tried my algorithmen to calculate every possible combinations of fitters covering stations, and it worked flawless. But I only tried it with relative small data sets (the idea was to have a data set at leat 5x). When increasing the data set with about 30%, the calculation will slow down significally. Consider this: You want to calculate the shortest path between a number of destinations, and you will have to calculate every possible outcomes first, but for every new destination you introduce, you will introduce a great number of complexity in the system and it will be compounding for every element you introduce, making the calculation exponentially harder/longer to solve for every new introduction to the data set. 
+This makes the problem an NP-complete (such problems are not believed to be efficiently solvable for large sets of data).
+  </p>
+
+ <p>
+   Hopfully the value I gainged of this failed application is that I (hopfully) can identify an NP-problem before trying to solve it. 
+  </p>
+ 
+
